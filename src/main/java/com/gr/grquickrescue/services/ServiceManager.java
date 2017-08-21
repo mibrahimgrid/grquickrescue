@@ -18,6 +18,9 @@ public class ServiceManager {
 
 	private ServiceManager() {
 		serviceMap = new HashMap<String, Object>();
+		serviceMap.put(ContractServiceRemote.class.getName(), new ContractService());
+		serviceMap.put(AlertProfileServiceRemote.class.getName(), new AlertProfileService());
+		serviceMap.put(QRLoginServiceRemote.class.getName(), new QRLoginService());
 		serviceMap.put(AddressServiceRemote.class.getName(), new AddressService());
 		serviceMap.put(AccountServiceRemote.class.getName(), new AccountService());
 		serviceMap.put(ContactServiceRemote.class.getName(), new ContactService());

@@ -1,0 +1,86 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:b="http://java.sun.com/jsf/html"
+      xmlns:p="http://xmlns.jcp.org/jsf/passthrough"
+      xmlns:a4j="http://richfaces.org/a4j"
+      xmlns:rich="http://richfaces.org/rich">
+
+	<ui:composition template="/resources/common/commonLayout.xhtml">
+		<ui:define name="content">
+			<div id="addNewAccountDiv" style="display: none" class="addNewAccountDiv">
+			<h:form id="addAccountForm">
+		        	<table>
+		        		<tr>
+		        			<h:inputText value="#{alertProfileController.name}" class="accountCredentials" p:placeholder="Name" required="true" requiredMessage="*"/>
+		        		</tr>
+		        		<tr>
+		        			<h:inputText value="#{alertProfileController.city}" class="accountCredentials" p:placeholder="City" required="true" requiredMessage="*" />
+		        		</tr>
+		        		<tr>
+		        			<h:inputText value="#{alertProfileController.country}" class="accountCredentials" p:placeholder="Country" />
+		        		</tr>
+		        	</table>
+		        			<h:commandButton action="#{alertProfileController.addAlertProfile(accountController.id)}" id="saveNewAccountButton" value="Save" class="newAccountBottomButton" style="left:28%;">
+		        				<a4j:ajax execute="addAccountForm" render="accountForm:accountTable" onbeforesubmit="closediv()" />
+		        			</h:commandButton>
+		        			
+				        	<button type="button" id="cancelAddingNewAccountButton" class="newAccountBottomButton" style="left:50%;">Cancel</button>
+        	</h:form>
+        </div>
+        <div class="toolBox" >
+        	<b:inputText p:placeholder="Search Account" class="searchBar"/>
+			<button id="addNewAccountButton" class="addNewAccountButton">
+				<h:graphicImage class="addNewAccountImage" value="#{resource['images:addNewUserImage.png']}"/>
+			New Alert Profile</button>
+			
+        </div>
+         
+        <br/>
+        <h:panelGroup layout="block" class="dataTable">
+        	<h:form id="accountForm">
+        				<h:dataTable id="accountTable" class="table table-striped table-bordered table-hover table-condensed" value="#{alertProfileController.alertsList}" var="alert">
+            
+		            <h:column>
+		            	<f:facet name="header"><center>Name</center></f:facet>
+		                <h:outputText value="#{alert.name}" rendered="#{not alert.editable}" />
+		               <h:inputText value="#{alert.name}" rendered="#{alert.editable}" />
+		            </h:column>
+		            
+		            <h:column>
+		            	<f:facet name="header"><center>City</center></f:facet>
+		               <h:outputText value="#{alert.city}" rendered="#{not alert.editable}" />
+		               <h:inputText value="#{alert.city}" rendered="#{alert.editable}" />
+		            </h:column>
+		            
+		            <h:column>
+		            	<f:facet name="header"><center>Country</center></f:facet>
+		               <h:outputText value="#{alert.country}" rendered="#{not alert.editable}" />
+		               <h:inputText value="#{alert.country}" rendered="#{alert.editable}" />
+		            </h:column>           
+		        	<h:column>
+		        		<f:facet name="header"><center>Action</center> </f:facet>
+			        		<h:commandLink action="#{alertProfileController.updateAlertProfile(alert)}" value="Edit   " rendered="#{not alert.editable}">
+			        			<f:ajax render="accountForm:accountTable" />
+			        		</h:commandLink>
+		        		
+			        		<h:commandLink action="#{alertProfileController.saveEdit(alert)}" value="Save   " rendered="#{alert.editable}">
+			        			<f:ajax execute="accountForm" render="accountForm:accountTable" />
+			        		</h:commandLink>
+			        		
+			        		<h:commandLink action="#{alertProfileController.deleteAlertProfile(alert)}" value="Delete   " rendered="#{not alert.editable}">
+			        			<f:ajax render="accountForm:accountTable" />
+			        		</h:commandLink>
+			        		
+			        		<h:commandLink action="#{alertProfileController.cancelEdit(alert)}" value="Cancel   " rendered="#{alert.editable}" >
+			        			<f:ajax render="accountForm:accountTable" />
+			        		</h:commandLink>
+		        	</h:column>
+        		</h:dataTable>
+        	</h:form>
+		</h:panelGroup>
+		</ui:define>
+	</ui:composition>
+</html>

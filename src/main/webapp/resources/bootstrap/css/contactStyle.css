@@ -1,0 +1,15 @@
+@charset "ISO-8859-1";
+.addNewContactDiv
+{
+	position:fixed;
+	left:40%;
+	background-color: #D0D3D4;
+	width: 680px;
+	height: 350px;
+	border:solid black;
+	border-bottom-left-radius: 3%;
+	border-bottom-right-radius:3%;
+	border-color:#8b8e8e;
+	padding-left: 30px;
+	padding-top: 20px;
+}

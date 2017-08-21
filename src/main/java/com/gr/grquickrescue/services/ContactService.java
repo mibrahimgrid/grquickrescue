@@ -21,9 +21,9 @@ public class ContactService implements ContactServiceRemote
 		contactDao = (ContactDaoHibernateImpl) DaoManager.getInstance(ContactDao.class.getName());
 	}
 	@Override
-	public void saveContact(Contact enetity)
+	public void saveContact(Contact entity)
 	{
-		contactDao.saveContact(enetity);
+		contactDao.saveContact(entity);
 
 	}
 	@Override

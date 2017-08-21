@@ -70,10 +70,10 @@ public class AccountDaoHibernateImpl implements AccountDao
 		getCurrentSession().save(entity);
 		closeCurrentSessionwithTransaction();
 	}
-	public void updateAccount(Account entity)
+	public void updateAccount(Account account)
 	{
 		openCurrentSessionwithTransaction();
-		getCurrentSession().update(entity);
+		getCurrentSession().update(account);
 		closeCurrentSessionwithTransaction();
 	}
 	public Account findAccountById(int id) 

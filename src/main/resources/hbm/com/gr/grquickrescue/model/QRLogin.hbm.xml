@@ -1,0 +1,14 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping>
+
+    <class name="com.gr.grquickrescue.models.QRLogin" table="QRLogin">
+        <id name="id" type="int" column="id">
+            <generator class="identity"/>
+        </id>
+        <property name="username" type="java.lang.String" column="username"/>
+        <property name="password" type="java.lang.String" column="password"/>
+    </class>
+</hibernate-mapping>

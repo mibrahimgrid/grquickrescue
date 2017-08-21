@@ -8,7 +8,7 @@
 	<class name="Contact" table="Contact">
 		
 		<id name="id" type="int" column="id">
-			<generator class="identity"/>
+			<generator class="native"/>
 		</id>
 		
 		<property name="firstName" type="java.lang.String" column="firstName"/>
@@ -17,12 +17,11 @@
 		<property name="gender" type="java.lang.String" column="gender"/>
 		<property name="phoneNumber" type="java.lang.String" column="phoneNumber"/>
 		<property name="status" type="boolean" column="status"/>
+		<property name="hasLogin" type="boolean" column = "hasLogin"/>
 		<many-to-one name="account" class="Account">
 			<column name="accountID" unique="false" not-null="false"></column>
 		</many-to-one>
-		<many-to-one name="address" class="Address">
-			<column name="addressID" unique="true"></column>
-		</many-to-one>
+		<many-to-one name="address" class="Address" column="addressID" unique="true" not-null="true" cascade="all"/>
 	
 	</class>
 	

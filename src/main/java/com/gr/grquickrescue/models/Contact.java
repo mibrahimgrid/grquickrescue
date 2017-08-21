@@ -15,11 +15,11 @@ public class Contact implements java.io.Serializable
 	private Address address;
 	private Account account;
 	private String email;
-	
+	private transient boolean isEditable;
+	private boolean hasLogin;
 	public Contact(){}
-	public Contact( int id,String fname,String lname,String eaddr,String gender,String phnumber,boolean status, Address addr,Account acc)
+	public Contact( String fname,String lname,String eaddr,String gender,String phnumber,boolean status, Address addr,Account acc)
 	{
-		this.id = id;
 		this.firstName = fname;
 		this.lastName = lname;
 		this.email = eaddr;
@@ -92,8 +92,16 @@ public class Contact implements java.io.Serializable
 	public void setAddress(Address address) {
 		this.address = address;
 	}
-
-
+	public boolean isEditable() {
+		return isEditable;
+	}
+	public void setEditable(boolean isEditable) {
+		this.isEditable = isEditable;
+	}
+	public boolean isHasLogin() {
+		return hasLogin;
+	}
+	public void setHasLogin(boolean hasLogin) {
+		this.hasLogin = hasLogin;
+	}
 }
-
-

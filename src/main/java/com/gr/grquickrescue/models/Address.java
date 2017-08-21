@@ -13,17 +13,16 @@ public class Address implements java.io.Serializable
 	private String city;
 	private String province;
 	private String country;
-
-	public Address(int id,String StreetAddress, String City, String Province, String Country)
+	public Address(){}
+	public Address(String StreetAddress, String City, String Province, String Country)
 	{
-		this.id = id;
 		this.streetAddress = StreetAddress;
 		this.city = City;
 		this.province = Province;
 		this.country = Country;
 	}
 
-	public Address(){}
+	
 	public void ToString()
 	{
 		System.out.println(id +", "+streetAddress+", "+city+", "+province+", "+country );

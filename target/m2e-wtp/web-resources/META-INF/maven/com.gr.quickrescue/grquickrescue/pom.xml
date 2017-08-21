@@ -49,11 +49,7 @@
 			<artifactId>javassist</artifactId>
 			<version>3.20.0-GA</version>
 		</dependency>
-		<dependency>
-		    <groupId>org.webjars</groupId>
-		    <artifactId>bootstrap</artifactId>
-		    <version>3.2.0</version>
-		</dependency>
+		
 		<dependency>
 	  <!--  Only bundled with java 1.6+ -->
 			  <groupId>javax.annotation</groupId>

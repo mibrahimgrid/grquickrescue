@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:b="http://java.sun.com/jsf/html"
+      xmlns:p="http://xmlns.jcp.org/jsf/passthrough">
+
+ 	<ui:composition template="/resources/common/commonLayout.xhtml">
+		<ui:define name="content">
+			<h:form id="loginForm">
+				<div id="loginDiv"  class="loginPanel">
+					<h:outputLabel value="Please Login" class="loginText"/>
+					<hr class="hrLine" />
+					<br/>
+					<br/>
+					<h:outputText value="User Id" />
+					<br/>
+					<h:inputText value="#{loginBean.username}" styleClass="loginCredentials" />
+					<br/>
+					<h:outputText value="Password" />
+					<br/>
+					<h:inputSecret value="#{loginBean.password}" styleClass="loginCredentials"/>
+					<br/>
+					<center><h:commandButton action="#{loginBean.doLogin()}" value="Login" styleClass="loginButton" /></center>
+				</div>
+			</h:form>
+  		</ui:define>
+	</ui:composition>
+</html>

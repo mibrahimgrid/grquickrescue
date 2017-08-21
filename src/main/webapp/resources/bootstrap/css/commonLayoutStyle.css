@@ -1,0 +1,32 @@
+@charset "ISO-8859-1";
+html, body
+{
+	margin:0;
+	background-color: #D0D3D4;
+}
+.header
+{
+    height:120px;
+    background:#06073D;
+    width:100%;
+}
+.footer
+{
+	height:60px;
+    background:#06073D;
+    margin:0px auto;
+    position: absolute;
+    left: 0;
+    right:0;
+    bottom: 0;
+    width: 100%;
+    overflow:hidden
+}
+.quickRescueHeaderImage
+{
+	float:left;
+	margin-left: 15px;
+	margin-top: 10px;
+}
+
+

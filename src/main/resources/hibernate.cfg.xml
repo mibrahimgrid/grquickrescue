@@ -9,7 +9,7 @@
         <!-- Database connection settings -->
         <property name="hibernate.dialect">org.hibernate.dialect.MySQLDialect</property>
         <property name="hibernate.connection.driver_class">com.mysql.jdbc.Driver</property>
-        <property name="hibernate.connection.url">jdbc:mysql://localhost:3306/grquickrescue</property>
+        <property name="hibernate.connection.url">jdbc:mysql://localhost:3306/grquickrescue?useSSL=false</property>
         <property name="hibernate.connection.username">root</property>
         <property name="hibernate.connection.password">mysql@grid</property>
         <property name="show_sql">true</property>
@@ -17,7 +17,9 @@
 		<mapping resource="hbm/com/gr/grquickrescue/model/Address.hbm.xml"/>
 		<mapping resource="hbm/com/gr/grquickrescue/model/Contact.hbm.xml"/>
 		<mapping resource="hbm/com/gr/grquickrescue/model/Account.hbm.xml"/>
-		
+		<mapping resource="hbm/com/gr/grquickrescue/model/QRLogin.hbm.xml"/>
+		<mapping resource="hbm/com/gr/grquickrescue/model/AlertProfile.hbm.xml"/>
+		<mapping resource="hbm/com/gr/grquickrescue/model/Contract.hbm.xml"/>
 		
     </session-factory>
 

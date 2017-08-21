@@ -28,7 +28,7 @@ public class AccountService implements AccountServiceRemote
 	public void updateAccount(Account entity)
 	{
 
-		accountDao.saveAccount(entity);
+		accountDao.updateAccount(entity);
 	}
 	@Override
 	public Account findAccountById(int id)

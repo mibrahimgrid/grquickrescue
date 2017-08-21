@@ -11,7 +11,10 @@ public class Account implements java.io.Serializable {
 	private String name;
 	private String email;
 	private String timeZone;
+	private Contract contract;
 	private Set<Contact> contacts;
+	private Set<AlertProfile> alertProfiles;
+	private transient boolean isEditable;
 
 	public Account(int id, String name, String email, String timezone) {
 
@@ -66,6 +69,30 @@ public class Account implements java.io.Serializable {
 
 	public void setContacts(Set<Contact> contacts) {
 		this.contacts = contacts;
+	}
+
+	public boolean isEditable() {
+		return isEditable;
+	}
+
+	public void setEditable(boolean isEditable) {
+		this.isEditable = isEditable;
+	}
+
+	public Set<AlertProfile> getAlertProfiles() {
+		return alertProfiles;
+	}
+
+	public void setAlertProfiles(Set<AlertProfile> alertProfiles) {
+		this.alertProfiles = alertProfiles;
+	}
+
+	public Contract getContract() {
+		return contract;
+	}
+
+	public void setContract(Contract contract) {
+		this.contract = contract;
 	}
 
 }

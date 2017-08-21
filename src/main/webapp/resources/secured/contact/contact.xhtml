@@ -1,0 +1,144 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:b="http://java.sun.com/jsf/html"
+      xmlns:p="http://xmlns.jcp.org/jsf/passthrough"
+      xmlns:a4j="http://richfaces.org/a4j">
+	
+<ui:composition template="/resources/common/commonLayout.xhtml">
+		<ui:define name="content">
+		<div id="addNewAccountDiv" style="display: none" class="addNewContactDiv">
+			<h:form id="addContactForm">
+		        	<table>
+		        		<tr>
+		        			<td> 
+		        				<h:inputText value="#{contactController.email}" class="accountCredentials" p:placeholder="Email" required="true" requiredMessage="*"/>
+		        			</td>
+		        			<td>
+		        				<h:inputText value="#{contactController.stAddress}" class="accountCredentials" p:placeholder="Street Address" />
+		        			</td>
+		        			
+		        		</tr>
+		        		
+		        		<tr>
+		        			<td>
+		        				<h:inputText value="#{contactController.firstName}" class="accountCredentials" p:placeholder="FirstName" required="true" requiredMessage="*" />
+		        			</td>
+		        			<td>
+		        				<h:inputText value="#{contactController.city}" class="accountCredentials" p:placeholder="City" />
+		        			</td>
+		        		</tr>
+		        		
+		        		<tr>
+		        			<td>
+		        				<h:inputText value="#{contactController.lastName}" class="accountCredentials" p:placeholder="Last Name" />
+		        			</td>
+		        			<td>
+		        				<h:inputText value="#{contactController.country}" class="accountCredentials" p:placeholder="Country" />
+		        			</td>
+		        		</tr>
+		        		
+		        		<tr>
+		        			<td>
+		        				<h:inputText value="#{contactController.phNumber}" class="accountCredentials" p:placeholder="Mobile Number" />
+		        			</td>
+		        		</tr>
+		        		
+		        		<tr>
+							<h:selectOneRadio value="#{contactController.gender}">
+								<f:selectItem itemValue="Male" itemLabel="Male"/>
+								<f:selectItem itemValue="Female" itemLabel="Female"/>
+							</h:selectOneRadio>
+		        		</tr>
+		        		
+		        		<tr>
+		        			<td>
+			        			<h:selectOneMenu value="#{contactController.accountID}" label="Select Account" class="accountCredentials">
+			        				<f:selectItems value="#{contactController.accountsList}"  var="accountsItems" itemValue="#{accountsItems.id}" itemLabel="#{accountsItems.name}" />
+			        			</h:selectOneMenu>
+							</td>
+		        		</tr>
+		        		
+		        		<tr>
+		        			<td>
+		        			<br/>
+		        				<h:selectBooleanCheckbox value="#{contactController.hasLogin}" label="Has Login"/>Has Login
+		        			</td>
+		        			
+		        		</tr>
+		        		
+		        	</table>
+		        			<h:commandButton actionListener="#{contactController.addNewContact()}" value="Save" id="saveNewAccountButton" class="newAccountBottomButton" style="left:35%;">
+		        				<a4j:ajax execute="addContactForm"  render="contactForm:contactTable" onbeforedomupdate="closediv()"  />
+		        			</h:commandButton>
+				        	<button type="button" id="cancelAddingNewAccountButton" class="newAccountBottomButton" style="left:50%;">Cancel</button>
+        	</h:form>
+        </div>
+        <div class="toolBox" >
+        	<b:inputText p:placeholder="Search Contact" class="searchBar"/>
+			
+			<button id="addNewAccountButton" class="addNewAccountButton">
+				<h:graphicImage class="addNewAccountImage" value="#{resource['images:addNewUserImage.png']}"/>
+			New User</button>
+        </div>
+	<br/>
+	<h:panelGroup layout="block" class="dataTable">
+		<h:form id="contactForm">
+	        <h:dataTable id="contactTable" class="table table-striped table-bordered table-hover table-condensed" value="#{contactController.contactsList}" var="contactItem">
+	            <h:column>
+	            	<f:facet name="header">Contact ID</f:facet>
+	               <h:outputText value="#{contactItem.id}"/>
+	            </h:column>
+	            <h:column>
+	            	<f:facet name="header">First Name</f:facet>
+	               <h:outputText value="#{contactItem.firstName}" rendered="#{!contactItem.editable}"/>
+	               <h:inputText value="#{contactItem.firstName}" rendered="#{contactItem.editable}"/>
+	            </h:column>
+	            
+	            <h:column>
+	            	<f:facet name="header">Last Name</f:facet>
+	               <h:outputText value="#{contactItem.lastName}" rendered="#{!contactItem.editable}"/>
+	               <h:inputText value="#{contactItem.lastName}" rendered="#{contactItem.editable}"/>
+	            </h:column>
+	            
+	            <h:column>
+	            	<f:facet name="header">Gender</f:facet>
+	               <h:outputText value="#{contactItem.gender}" rendered="#{!contactItem.editable}"/>
+	               <h:inputText value="#{contactItem.gender}" rendered="#{contactItem.editable}"/>
+	            </h:column>      
+	            <h:column>
+	            	<f:facet name="header">Phone Number</f:facet>
+	               <h:outputText value="#{contactItem.phoneNumber}" rendered="#{!contactItem.editable}"/>
+	               <h:inputText value="#{contactItem.phoneNumber}" rendered="#{contactItem.editable}"/>
+	            </h:column>
+	            
+	            <h:column>
+	            	<f:facet name="header">Email Address</f:facet>
+	               <h:outputText value="#{contactItem.email}" rendered="#{!contactItem.editable}"/>
+	               <h:inputText value="#{contactItem.email}" rendered="#{contactItem.editable}"/>
+	            </h:column>
+	            <h:column>
+	            	<f:facet name="header">Actions</f:facet>
+	            	<h:commandLink action="#{contactController.updateContact(contactItem)}" value="Edit  " rendered="#{!contactItem.editable}">
+	            		<f:ajax render="contactForm:contactTable" />
+	            	</h:commandLink>
+	            	<h:commandLink action="#{contactController.saveEdit(contactItem)}" value="Save  " rendered="#{contactItem.editable}">
+	            		<f:ajax execute="contactForm" render="contactForm:contactTable" />
+	            	</h:commandLink>
+	            	<h:commandLink action="#{contactController.deleteContact(contactItem)}" value="Delete  " rendered="#{!contactItem.editable}">
+	            		<f:ajax render="contactForm:contactTable" />
+	            	</h:commandLink>
+	            	<h:commandLink action="#{contactController.cancelEdit(contactItem)}" value="Cancel  " rendered="#{contactItem.editable}">
+	            		<f:ajax render="contactForm:contactTable" />
+	            	</h:commandLink>
+	            </h:column>     
+	        </h:dataTable>
+		</h:form>
+		
+	</h:panelGroup>
+			
+		</ui:define>
+	</ui:composition>
+</html>

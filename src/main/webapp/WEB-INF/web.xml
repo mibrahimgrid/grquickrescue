@@ -18,9 +18,18 @@
 
 	<!-- Welcome page -->
 	<welcome-file-list>
-		<welcome-file>index.xhtml</welcome-file>
+		<!--  <welcome-file>index.xhtml</welcome-file>-->
+		<welcome-file>login.xhtml</welcome-file>
 	</welcome-file-list>
-
+	<!-- LoginFilter -->
+	  <!--  <filter>
+		<filter-name>LoginFilter</filter-name>
+		<filter-class>com.gr.grquickrescue.controllers.LoginFilter</filter-class>
+	</filter>
+	<filter-mapping>
+		<filter-name>LoginFilter</filter-name>
+		<url-pattern>/secured/*</url-pattern>
+	</filter-mapping>-->
 	<!-- JSF mapping -->
 	<servlet>
 		<servlet-name>Faces Servlet</servlet-name>
@@ -35,14 +44,14 @@
 	</servlet-mapping>
 
 
-	<security-constraint>
+	<!--  <security-constraint>
 		<display-name>Restrict direct access to the /resources folder.</display-name>
 		<web-resource-collection>
 			<web-resource-name>The /resources folder.</web-resource-name>
 			<url-pattern>/resources/*</url-pattern>
 		</web-resource-collection>
-		<auth-constraint />
-	</security-constraint>
+		<auth-constraint/>
+	</security-constraint>-->
 
 	<context-param>
 		<param-name>javax.faces.INTERPRET_EMPTY_STRING_SUBMITTED_VALUES_AS_NULL</param-name>

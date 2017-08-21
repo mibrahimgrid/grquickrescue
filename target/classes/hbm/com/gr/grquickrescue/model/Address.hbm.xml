@@ -4,7 +4,9 @@
         "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
 <hibernate-mapping package="com.gr.grquickrescue.models">
 	<class name="Address" table="Address">
-		<id name="id" type="int" column="id"></id>
+		<id name="id" type="int" column="id">
+			<generator class="native"></generator>
+		</id>
 		<property name="streetAddress" type="java.lang.String" column="streetAddress"/>
 		<property name="city" type="java.lang.String" column="city"/>
 		<property name="province" type="java.lang.String" column="province"/>

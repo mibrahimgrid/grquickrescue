@@ -1,0 +1,15 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<!-- Generated Aug 17, 2017 11:22:27 AM by Hibernate Tools 3.5.0.Final -->
+<hibernate-mapping>
+    <class name="com.gr.grquickrescue.models.Contract" table="Contract">
+        <id name="id" type="int" column="ID" >
+            <generator class="native" />
+        </id>
+        <property name="maxContacts" type="int" column="maxContacts" />
+        <property name="maxLogins" type="int" column ="maxLogins" />
+        <property name="startDate" type="date" column="startDate" />
+        <property name="endDate" type="date" column="endDate" />
+    </class>
+</hibernate-mapping>
