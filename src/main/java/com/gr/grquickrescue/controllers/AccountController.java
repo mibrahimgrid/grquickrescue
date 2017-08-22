@@ -23,7 +23,7 @@ public class AccountController extends Account {
 	private List<Account> accountsList;
 
 	@PostConstruct
-	public void init() 
+	public void init()
 	{
 		accountService = (AccountServiceRemote) ServiceManager.getInstance(AccountServiceRemote.class.getName());
 		updateAccountsList();

@@ -19,4 +19,6 @@ public interface ContractDao {
 
 	public List<Contract> findAllContracts();
 
+	public List<Contract> findContractsByAccountId(int accountId);
+
 }

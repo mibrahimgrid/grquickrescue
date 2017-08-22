@@ -17,7 +17,7 @@
 		        				<h:inputText value="#{contactController.email}" class="accountCredentials" p:placeholder="Email" required="true" requiredMessage="*"/>
 		        			</td>
 		        			<td>
-		        				<h:inputText value="#{contactController.stAddress}" class="accountCredentials" p:placeholder="Street Address" />
+		        				<h:inputText value="#{contactController.address.streetAddress}" class="accountCredentials" p:placeholder="Street Address" />
 		        			</td>
 		        			
 		        		</tr>
@@ -27,7 +27,7 @@
 		        				<h:inputText value="#{contactController.firstName}" class="accountCredentials" p:placeholder="FirstName" required="true" requiredMessage="*" />
 		        			</td>
 		        			<td>
-		        				<h:inputText value="#{contactController.city}" class="accountCredentials" p:placeholder="City" />
+		        				<h:inputText value="#{contactController.address.city}" class="accountCredentials" p:placeholder="City" />
 		        			</td>
 		        		</tr>
 		        		
@@ -36,13 +36,13 @@
 		        				<h:inputText value="#{contactController.lastName}" class="accountCredentials" p:placeholder="Last Name" />
 		        			</td>
 		        			<td>
-		        				<h:inputText value="#{contactController.country}" class="accountCredentials" p:placeholder="Country" />
+		        				<h:inputText value="#{contactController.address.country}" class="accountCredentials" p:placeholder="Country" />
 		        			</td>
 		        		</tr>
 		        		
 		        		<tr>
 		        			<td>
-		        				<h:inputText value="#{contactController.phNumber}" class="accountCredentials" p:placeholder="Mobile Number" />
+		        				<h:inputText value="#{contactController.phoneNumber}" class="accountCredentials" p:placeholder="Mobile Number" />
 		        			</td>
 		        		</tr>
 		        		
@@ -51,14 +51,6 @@
 								<f:selectItem itemValue="Male" itemLabel="Male"/>
 								<f:selectItem itemValue="Female" itemLabel="Female"/>
 							</h:selectOneRadio>
-		        		</tr>
-		        		
-		        		<tr>
-		        			<td>
-			        			<h:selectOneMenu value="#{contactController.accountID}" label="Select Account" class="accountCredentials">
-			        				<f:selectItems value="#{contactController.accountsList}"  var="accountsItems" itemValue="#{accountsItems.id}" itemLabel="#{accountsItems.name}" />
-			        			</h:selectOneMenu>
-							</td>
 		        		</tr>
 		        		
 		        		<tr>

@@ -2,12 +2,128 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:ui="http://java.sun.com/jsf/facelets"
       xmlns:f="http://java.sun.com/jsf/core"
-      xmlns:h="http://java.sun.com/jsf/html">
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:b="http://java.sun.com/jsf/html"
+      xmlns:p="http://xmlns.jcp.org/jsf/passthrough"
+      xmlns:a4j="http://richfaces.org/a4j"
+      xmlns:rich="http://richfaces.org/rich">
 
 	<ui:composition template="/resources/common/commonLayout.xhtml">
-	
-		<ui:define name="content">
-		</ui:define>
-	
-	</ui:composition>
+	<ui:define name="content">
+		<div id="addNewAccountDiv" style="display: none"
+			class="addNewAccountDiv">
+			<h:form id="addAccountForm">
+				<table>
+					<tr>
+						<h:inputText value="#{contractController.maxContacts}"
+							class="accountCredentials" p:placeholder="Max Contacts" required="true"
+							requiredMessage="*" />
+					</tr>
+					<tr>
+						<h:inputText value="#{contractController.maxLogins}"
+							class="accountCredentials" p:placeholder="Max Login" required="true"
+							requiredMessage="*" />
+					</tr>
+					<tr>
+						<h:inputText value="#{contractController.startDate}"
+							class="accountCredentials" p:placeholder="Start Date (dd-mm-yyyy)" />
+					</tr>
+					<tr>
+						<h:inputText value="#{contractController.endDate}"
+							class="accountCredentials" p:placeholder="end Date (dd-mm-yyyy)" />
+					</tr>
+				</table>
+				<h:commandButton action="#{contractController.addContract(accountController.id)}"
+					id="saveNewAccountButton" value="Save"
+					class="newAccountBottomButton" style="left:28%;">
+					<a4j:ajax execute="addAccountForm"
+						render="contractForm:contractTable" onbeforesubmit="closediv()" />
+				</h:commandButton>
+
+				<button type="button" id="cancelAddingNewAccountButton"
+					class="newAccountBottomButton" style="left: 50%;">Cancel</button>
+			</h:form>
+		</div>
+		<div class="toolBox">
+			<h:form>
+				<b:inputText p:placeholder="Search Contract" class="searchBar" />
+				<button id="addNewAccountButton" type="button" class="addNewAccountButton">
+					<h:graphicImage class="addNewAccountImage"
+						value="#{resource['images:addNewUserImage.png']}" />
+					New Contract
+				</button>
+
+			</h:form>
+
+		</div>
+
+		<br />
+		<h:panelGroup layout="block" class="dataTable">
+			<h:form id="contractForm">
+				<h:dataTable id="contractTable"
+					class="table table-striped table-bordered table-hover table-condensed"
+					value="#{contractController.contractsList}" var="contract">
+
+					<h:column>
+						<f:facet name="header">
+							<center>Max Contacts</center>
+						</f:facet>
+						<h:outputText value="#{contract.maxContacts}"  rendered="#{!contract.editable}"/>
+						<h:inputText value="#{contract.maxContacts}" rendered="#{contract.editable}"/>
+					</h:column>
+
+					<h:column>
+						<f:facet name="header">
+							<center>Max Login</center>
+						</f:facet>
+						<h:outputText value="#{contract.maxLogins}" rendered="#{!contract.editable}"/>
+						<h:inputText value="#{contract.maxLogins}" rendered="#{contract.editable}"/>
+					</h:column>
+
+					<h:column>
+						<f:facet name="header">
+							<center>Start Date</center>
+						</f:facet>
+						<h:outputText value="#{contract.startDate}" rendered="#{!contract.editable}"/>
+						<h:inputText value="#{contract.startDate}" rendered="#{contract.editable}"/>
+					</h:column>
+					<h:column>
+						<f:facet name="header">
+							<center>End Date</center>
+						</f:facet>
+						<h:outputText value="#{contract.endDate}" rendered="#{!contract.editable}"/>
+						<h:inputText value="#{contract.endDate}" rendered="#{contract.editable}"/>
+					</h:column>
+					
+					<h:column>
+						<f:facet name="header">
+							<center>Action</center>
+						</f:facet>
+						<h:commandLink
+							action="#{contractController.updateContract(contract)}"
+							value="Edit   " rendered="#{not contract.editable}">
+							<f:ajax render="contractForm:contractTable" />
+						</h:commandLink>
+
+						<h:commandLink action="#{contractController.saveEdit(contract)}"
+							value="Save   " rendered="#{contract.editable}">
+							<f:ajax execute="contractForm" render="contractForm:contractTable" />
+						</h:commandLink>
+
+						<h:commandLink
+							action="#{contractController.deleteContract(contract)}"
+							value="Delete   " rendered="#{not contract.editable}">
+							<f:ajax render="accountForm:accountTable" />
+						</h:commandLink>
+
+						<h:commandLink action="#{contractController.cancelEdit(contract)}"
+							value="Cancel   " rendered="#{contract.editable}">
+							<f:ajax render="contractForm:contractTable" />
+						</h:commandLink>
+					</h:column>
+				</h:dataTable>
+			</h:form>
+		</h:panelGroup>
+	</ui:define>
+</ui:composition>
 </html>

@@ -85,11 +85,18 @@ public class ContactDaoHibernateImpl implements ContactDao
 		closeCurrentSessionwithTransaction();
 	}
 	@SuppressWarnings("unchecked")
-
 	public List<Contact> findAllContacts() 
 	{
 		openCurrentSession();
 		List<Contact> contacts = (List<Contact>) getCurrentSession().createQuery("from Contact").list();
+		closeCurrentSession();
+		return contacts;
+	}
+	@SuppressWarnings("unchecked")
+	public List<Contact> findContactsByAccountId(int accountId)
+	{
+		openCurrentSession();
+		List<Contact> contacts = (List<Contact>)getCurrentSession().createQuery("from Contact where accountID = "+accountId).list();
 		closeCurrentSession();
 		return contacts;
 	}

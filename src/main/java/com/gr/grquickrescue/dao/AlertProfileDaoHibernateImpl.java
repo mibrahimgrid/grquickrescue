@@ -108,6 +108,14 @@ public class AlertProfileDaoHibernateImpl implements AlertProfileDao{
 	}
 
 	@Override
+	@SuppressWarnings("unchecked")
+	public List<AlertProfile> findAlertProfilesByAccountId(int id)
+	{
+		openCurrentSession();
+		List<AlertProfile> accountAlerts = (List<AlertProfile>)getCurrentSession().createQuery("from AlertProfile where accountIDFK = "+id).list(); 
+		return accountAlerts;
+	}
+	@Override
 	public void deleteAllAlertProfiles() {
 		// TODO Auto-generated method stub
 		openCurrentSessionwithTransaction();

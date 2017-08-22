@@ -50,5 +50,10 @@ public class ContractService implements ContractServiceRemote {
 		// TODO Auto-generated method stub
 		return contractDao.findAllContracts();
 	}
+	@Override
+	public List<Contract> findContractsByAccountId(int accountId) {
+		// TODO Auto-generated method stub
+		return contractDao.findContractsByAccountId(accountId);
+	}
 
 }

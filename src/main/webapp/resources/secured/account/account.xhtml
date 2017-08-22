@@ -44,8 +44,6 @@
 		<div class="toolBox">
 			<h:form>
 				<b:inputText p:placeholder="Search Account" class="searchBar" />
-				<h:commandLink action="#{navigationController.gotoAlertProfiles(true)}"
-					value="Alert Profile" />
 				<button id="addNewAccountButton" type="button" class="addNewAccountButton">
 					<h:graphicImage class="addNewAccountImage"
 						value="#{resource['images:addNewUserImage.png']}" />
@@ -61,14 +59,14 @@
 			<h:form id="accountForm">
 				<h:dataTable id="accountTable"
 					class="table table-striped table-bordered table-hover table-condensed"
-					value="#{accountController.accountsList}" var="account" rows="5">
+					value="#{accountController.accountsList}" var="account">
 
 					<h:column>
 						<f:facet name="header">
 							<center>Name</center>
 						</f:facet>
 						<h:commandLink
-							action="#{contactController.findContactsByAccountId(account)}"
+							action="#{contactController.findContactsByAccountId(account.id)}"
 							value="#{account.name}" rendered="#{not account.editable}" />
 						<h:inputText value="#{account.name}"
 							rendered="#{account.editable}" />
@@ -89,10 +87,18 @@
 							<center>Time Zone</center>
 						</f:facet>
 						<h:outputText value="#{account.timeZone}"
-							rendered="#{not account.editable}" />
+							rendered="#{not account.editable}"/>
 						<h:inputText value="#{account.timeZone}"
 							rendered="#{account.editable}" />
 					</h:column>
+					<h:column>
+						<f:facet name="header">
+							<center>Subscription</center>
+						</f:facet>
+						<h:commandLink action="#{alertProfileController.openAccountAlertProfiles(account.id)}" value="Alert Profile    "/>
+						<h:commandLink action="#{contractController.openAccountContracts(account.id)}" value="Contract"/>
+					</h:column>
+					
 					<h:column>
 						<f:facet name="header">
 							<center>Action</center>
@@ -111,7 +117,7 @@
 						<h:commandLink
 							action="#{accountController.deleteAccount(account)}"
 							value="Delete   " rendered="#{not account.editable}">
-							<f:ajax render="accountForm:accountTable" />
+							  <f:ajax render="accountForm:accountTable" />
 						</h:commandLink>
 
 						<h:commandLink action="#{accountController.cancelEdit(account)}"

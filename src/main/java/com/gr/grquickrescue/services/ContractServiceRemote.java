@@ -13,4 +13,5 @@ public interface ContractServiceRemote {
 	public Contract findContractById(int accountId);
 	public void deleteContract(int accountId);
 	public List<Contract> findAllContracts();
+	List<Contract> findContractsByAccountId(int accountId);
 }

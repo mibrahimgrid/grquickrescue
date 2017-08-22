@@ -49,7 +49,11 @@ public class AlertProfileService implements AlertProfileServiceRemote{
 		List<AlertProfile> alerts = alertDao.findAllAlertProfiles();
 		return alerts;
 	}
-
+	@Override
+	public List<AlertProfile> findAlertProfilesByAccountId(int id)
+	{
+		return alertDao.findAlertProfilesByAccountId(id);
+	}
 	@Override
 	public void deleteAllAlertProfiles() {
 		// TODO Auto-generated method stub

@@ -1,11 +1,5 @@
 package com.gr.grquickrescue.models;
 
-import java.text.DateFormat;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.Locale;
-
 public class Contract implements java.io.Serializable{
 
 	/**
@@ -15,14 +9,17 @@ public class Contract implements java.io.Serializable{
 	private int id;
 	private int maxContacts;
 	private int maxLogins;
-	private Date startDate;
-	private Date endDate;
-	public Contract(int maxCon , int maxLogin,String sdate,String edate) {
+	private String startDate;
+	private String endDate;
+	private Account account;
+	private boolean isEditable;
+	public Contract(int maxCon , int maxLogin,String sdate,String edate, Account account) {
 		
 		setMaxContacts(maxCon);
 		setMaxLogins(maxLogin);
 		setStartDate(sdate);
 		setEndDate(edate);
+		setAccount(account);
 	}
 	public Contract() 
 	{
@@ -40,32 +37,34 @@ public class Contract implements java.io.Serializable{
 	public void setMaxLogins(int maxLogins) {
 		this.maxLogins = maxLogins;
 	}
-	public Date getStartDate() {
+	public String getStartDate() {
 		return this.startDate;
 	}
 	public void setStartDate(String sDate) {
-		try {
-			this.startDate = new SimpleDateFormat("dd-MM-yyyy",Locale.ENGLISH).parse(sDate);
-		} catch (ParseException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+		this.startDate = sDate;
 	}
-	public Date getEndDate() {
+	public String getEndDate() {
 		return 	this.endDate;
 	}
 	public void setEndDate(String eDate) {
-		try {
-			this.endDate = new SimpleDateFormat("dd-MM-yyyy",Locale.ENGLISH).parse(eDate);
-		} catch (ParseException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+		this.endDate = eDate;
 	}
 	public int getId() {
 		return id;
 	}
 	public void setId(int id) {
 		this.id = id;
+	}
+	public Account getAccount() {
+		return account;
+	}
+	public void setAccount(Account account) {
+		this.account = account;
+	}
+	public boolean isEditable() {
+		return isEditable;
+	}
+	public void setEditable(boolean isEditable) {
+		this.isEditable = isEditable;
 	}
 }

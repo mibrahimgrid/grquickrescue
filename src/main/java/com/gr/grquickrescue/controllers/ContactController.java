@@ -17,8 +17,12 @@ import com.gr.grquickrescue.services.ServiceManager;
 import com.gr.grquickrescue.utils.PasswordUtility;
 @ManagedBean
 @SessionScoped
-public class ContactController extends ContactBean {
+public class ContactController extends Contact {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	@EJB
 	private ContactServiceRemote contactService;
 	@EJB
@@ -40,44 +44,28 @@ public class ContactController extends ContactBean {
 		contactService = (ContactServiceRemote) ServiceManager.getInstance(ContactServiceRemote.class.getName());
 		addressService = (AddressServiceRemote) ServiceManager.getInstance(AddressServiceRemote.class.getName());
 		accountService = (AccountServiceRemote) ServiceManager.getInstance(AccountServiceRemote.class.getName());
-		
-		updateAccountsList();
+	}
+	public String findContactsByAccountId(int accountId) 
+	{
+		this.setAccount(accountService.findAccountById(accountId));
 		updateContactsList();
-	}
-	public String findContactsByAccountId(Account account) 
-	{
-		//int contactId = account.getId();
-		
-		//contactsList.removeIf(obj->obj.getAccount().getId() != contactId);
-		
-		return "resources/secured/account/account?faces-redirect=true";
-	}
-	public void updateAccountsList() 
-	{
-		setAccountsList(accountService.findAllAccounts());
+		return "/resources/secured/contact/contact";
 	}
 	public void updateContactsList() 
 	{
-		contactsList = contactService.findAllContacts();
+		this.setContactsList(contactService.findContactsByAccountId(this.getAccount().getId()));
 	}
-	public List<Contact> getContactsList() {
-		return contactsList;
-	}
-	public void setContactsList(List<Contact> contactsList) {
-		this.contactsList = contactsList;
-	}
+	
 	public String addNewContact() 
 	{
 		Address address  = new Address();
-		address.setId(1);
-		address.setStreetAddress(getStAddress());
-		address.setCity(getCity());
-		address.setCountry(getCountry());
+		
+		address.setStreetAddress(this.getAddress().getStreetAddress());
+		address.setCity(this.getAddress().getCity());
+		address.setCountry(this.getAddress().getCountry());
 		addressService.saveAddress(address);
 		
-		Account account = accountService.findAccountById(getAccountID());
-		
-		Contact contact = new Contact(this.getFirstName(),this.getLastName(),this.getEmail(),this.getGender(),this.getPhNumber(),this.isHasLogin(),address,account);
+		Contact contact = new Contact(this.getFirstName(),this.getLastName(),this.getEmail(),this.getGender(),this.getPhoneNumber(),this.isHasLogin(),address,this.getAccount());
 		contact.setHasLogin(this.isHasLogin());
 		contactService.saveContact(contact);
 		if(isHasLogin()) 
@@ -85,7 +73,6 @@ public class ContactController extends ContactBean {
 			QRLogin contactLogin = new QRLogin(this.getEmail(),PasswordUtility.generateRandomPassword());
 			loginService.saveLogin(contactLogin);
 		}
-		updateAccountsList();
 		updateContactsList();
 		return null;
 	}
@@ -118,5 +105,10 @@ public class ContactController extends ContactBean {
 	public void setAccountsList(List<Account> accountsList) {
 		this.accountsList = accountsList;
 	}
-	
+	public List<Contact> getContactsList() {
+		return contactsList;
+	}
+	public void setContactsList(List<Contact> contactsList) {
+		this.contactsList = contactsList;
+	}
 }

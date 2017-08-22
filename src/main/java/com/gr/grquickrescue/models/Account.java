@@ -11,7 +11,7 @@ public class Account implements java.io.Serializable {
 	private String name;
 	private String email;
 	private String timeZone;
-	private Contract contract;
+	private Set<Contract> contracts;
 	private Set<Contact> contacts;
 	private Set<AlertProfile> alertProfiles;
 	private transient boolean isEditable;
@@ -87,12 +87,12 @@ public class Account implements java.io.Serializable {
 		this.alertProfiles = alertProfiles;
 	}
 
-	public Contract getContract() {
-		return contract;
+	public Set<Contract> getContracts() {
+		return contracts;
 	}
 
-	public void setContract(Contract contract) {
-		this.contract = contract;
+	public void setContracts(Set<Contract> contracts) {
+		this.contracts = contracts;
 	}
 
 }

@@ -11,5 +11,6 @@ public interface AlertProfileServiceRemote {
 	public AlertProfile findAlertProfileById(int alertId);
 	public void deleteAlertProfile(int alertId);
 	public List<AlertProfile> findAllAlertProfiles();
+	public List<AlertProfile> findAlertProfilesByAccountId(int id);
 	public void deleteAllAlertProfiles();
 }

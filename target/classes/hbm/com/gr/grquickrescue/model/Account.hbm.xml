@@ -3,30 +3,32 @@
 	"-//Hibernate/Hibernate Mapping DTD 3.0//EN"
 	"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
 <hibernate-mapping package="com.gr.grquickrescue.models">
-	
+
 	<class name="Account" table="Account">
-		
+
 		<id name="id" type="int" column="id">
 			<generator class="native"></generator>
 		</id>
-		<property name="name" type="java.lang.String" column="name"/>
-		<property name="email" type="java.lang.String" column="email"/>
-		<property name="timeZone" type="java.lang.String" column="timeZone"/>
-		<set name="contacts" table="Contact" fetch="select">
+		<property name="name" type="java.lang.String" column="name" />
+		<property name="email" type="java.lang.String" column="email" />
+		<property name="timeZone" type="java.lang.String" column="timeZone" />
+		<set name="contacts" table="Contact" cascade="all" inverse="true">
 			<key>
 				<column name="accountID" not-null="true"></column>
 			</key>
-			<one-to-many class="Contact"/>
+			<one-to-many class="Contact" />
 		</set>
-		<set name="alertProfiles" table="AlertProfile" fetch="select">
+		<set name="alertProfiles" table="AlertProfile" cascade="all" inverse="true">
 			<key>
 				<column name="id" not-null="true"></column>
 			</key>
-			<one-to-many class="AlertProfile"/>
+			<one-to-many class="AlertProfile" />
 		</set>
-		<many-to-one name="contract" class="Contract" column="contractID" unique="true" cascade="all"/>
-		
-		
+		<set name="contracts" table="Contract" cascade="all" inverse="true">
+			<key>
+				<column name="id" not-null="true"></column>
+			</key>
+			<one-to-many class="Contract" />
+		</set>
 	</class>
-	
 </hibernate-mapping>

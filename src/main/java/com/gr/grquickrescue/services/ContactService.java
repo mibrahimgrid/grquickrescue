@@ -50,6 +50,10 @@ public class ContactService implements ContactServiceRemote
 		List<Contact> contacts = contactDao.findAllContacts();
 		return contacts;
 	}
+	public List<Contact> findContactsByAccountId(int accountId)
+	{
+		return contactDao.findContactsByAccountId(accountId);
+	}
 	@Override
 	public void deleteAllContacts()
 	{

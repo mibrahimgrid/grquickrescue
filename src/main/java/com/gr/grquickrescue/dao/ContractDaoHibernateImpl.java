@@ -106,5 +106,14 @@ public class ContractDaoHibernateImpl implements ContractDao{
 		closeCurrentSession();
 		return contracts;
 	}
+	@Override
+	@SuppressWarnings("unchecked")
+	public List<Contract> findContractsByAccountId(int accountId) {
+		// TODO Auto-generated method stub
+		openCurrentSession();
+		List<Contract> contracts = (List<Contract>) getCurrentSession().createQuery("from Contract where accountFK = "+ accountId).list();
+		closeCurrentSession();
+		return contracts;
+	}
 
 }

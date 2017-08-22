@@ -17,7 +17,10 @@ public class Contact implements java.io.Serializable
 	private String email;
 	private transient boolean isEditable;
 	private boolean hasLogin;
-	public Contact(){}
+	public Contact()
+	{
+		address = new Address();
+	}
 	public Contact( String fname,String lname,String eaddr,String gender,String phnumber,boolean status, Address addr,Account acc)
 	{
 		this.firstName = fname;
@@ -28,7 +31,6 @@ public class Contact implements java.io.Serializable
 		this.status = status;
 		this.address = addr;
 		this.account = acc;
-
 	}
 	public void ToString()
 	{
