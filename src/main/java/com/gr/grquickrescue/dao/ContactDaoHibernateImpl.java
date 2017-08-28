@@ -78,6 +78,13 @@ public class ContactDaoHibernateImpl implements ContactDao
 		closeCurrentSession();
 		return contact;
 	}
+	@Override
+	public Contact findContactByEmail(String email) {
+		openCurrentSession();
+		Contact contact = (Contact) getCurrentSession().createQuery("from Contact where emailAddress = '"+email+"'").uniqueResult();
+		closeCurrentSession();
+		return contact;
+	}
 	public void deleteContact(Contact entity)
 	{
 		openCurrentSessionwithTransaction();
@@ -110,5 +117,6 @@ public class ContactDaoHibernateImpl implements ContactDao
 		}
 		closeCurrentSessionwithTransaction();
 	}
+	
 }
 

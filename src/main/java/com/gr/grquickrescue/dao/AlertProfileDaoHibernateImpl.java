@@ -113,6 +113,7 @@ public class AlertProfileDaoHibernateImpl implements AlertProfileDao{
 	{
 		openCurrentSession();
 		List<AlertProfile> accountAlerts = (List<AlertProfile>)getCurrentSession().createQuery("from AlertProfile where accountIDFK = "+id).list(); 
+		closeCurrentSession();
 		return accountAlerts;
 	}
 	@Override

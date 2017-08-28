@@ -23,7 +23,7 @@
 		        			<h:inputText value="#{alertProfileController.country}" class="accountCredentials" p:placeholder="Country" />
 		        		</tr>
 		        	</table>
-		        			<h:commandButton action="#{alertProfileController.addAlertProfile(accountController.id)}" id="saveNewAccountButton" value="Save" class="newAccountBottomButton" style="left:28%;">
+		        			<h:commandButton action="#{alertProfileController.addAlertProfile()}" id="saveNewAccountButton" value="Save" class="newAccountBottomButton" style="left:28%;">
 		        				<a4j:ajax execute="addAccountForm" render="accountForm:accountTable" onbeforesubmit="closediv()" />
 		        			</h:commandButton>
 		        			

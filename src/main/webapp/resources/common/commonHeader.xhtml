@@ -6,6 +6,11 @@
 	    <ui:composition >
 			<div class="header">
 					<h:graphicImage class="quickRescueHeaderImage" value="#{resource['images:quickRescueHeaderImage.png']}"/>
+					<h:form>
+						<h:commandLink action="/login" styleClass="loginLogoutLink" value="Login" rendered="#{!loginBean.isLoggedIn()}"/>
+						<h:commandLink action="#{loginBean.doLogout()}" styleClass="loginLogoutLink" value="Logout"  rendered="#{loginBean.isLoggedIn()}"/>
+						<h:outputLabel value="#{loginBean.username}" styleClass="loginLogoutLink" />
+					</h:form>
 			</div>
 	    </ui:composition>
     </body>

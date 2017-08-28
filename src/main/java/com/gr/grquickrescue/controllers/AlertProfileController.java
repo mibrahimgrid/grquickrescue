@@ -1,15 +1,11 @@
 package com.gr.grquickrescue.controllers;
 
 import java.util.List;
-import java.util.Map;
 
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
-import javax.faces.context.FacesContext;
-
-import com.gr.grquickrescue.models.Account;
 import com.gr.grquickrescue.models.AlertProfile;
 import com.gr.grquickrescue.services.AccountServiceRemote;
 import com.gr.grquickrescue.services.AlertProfileServiceRemote;
@@ -48,14 +44,13 @@ public class AlertProfileController extends AlertProfile{
 	{
 		setAlertsList(alertService.findAlertProfilesByAccountId(this.getAccount().getId()));
 	}
-	public void addAlertProfile(int id) 
+	public void addAlertProfile()
 	{
-		Account account = accountService.findAccountById(id); 
 		AlertProfile newAlert = new AlertProfile();
 		newAlert.setName(this.getName());
 		newAlert.setCity(this.getCity());
 		newAlert.setCountry(this.getCountry());
-		newAlert.setAccount(account);
+		newAlert.setAccount(this.getAccount());
 		alertService.saveAlertProfile(newAlert);
 		updateAlertProfilesList();
 	}

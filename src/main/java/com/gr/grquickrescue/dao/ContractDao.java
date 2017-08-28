@@ -14,11 +14,12 @@ public interface ContractDao {
 	public void updateContract(Contract Entity);
 
 	public Contract findContractById(int id);
-
+	
 	public void deleteContract(Contract Entity);
 
 	public List<Contract> findAllContracts();
-
+	
 	public List<Contract> findContractsByAccountId(int accountId);
 
+	
 }

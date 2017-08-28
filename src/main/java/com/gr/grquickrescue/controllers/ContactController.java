@@ -63,6 +63,7 @@ public class ContactController extends Contact {
 		address.setStreetAddress(this.getAddress().getStreetAddress());
 		address.setCity(this.getAddress().getCity());
 		address.setCountry(this.getAddress().getCountry());
+		
 		addressService.saveAddress(address);
 		
 		Contact contact = new Contact(this.getFirstName(),this.getLastName(),this.getEmail(),this.getGender(),this.getPhoneNumber(),this.isHasLogin(),address,this.getAccount());

@@ -1,5 +1,6 @@
 package com.gr.grquickrescue.dao;
 
+import java.io.IOException;
 import java.util.List;
 
 
@@ -9,7 +10,11 @@ import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
 import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
 import org.hibernate.cfg.Configuration;
+
+import com.google.code.geocoder.model.LatLng;
 import com.gr.grquickrescue.models.Address;
+import com.gr.grquickrescue.utils.GeocodingUtility;
+import com.gr.grquickrescue.utils.GeocodingUtility.LocationNotFoundException;
 
 import javax.ejb.Stateless;
 @Stateless
@@ -64,16 +69,41 @@ public class AddressDaoHibernateImpl implements AddressDao
 	{
 		this.currentTransaction = currentTransaction;
 	}
-	public void saveAddress(Address entity) 
+	public void saveAddress(Address address) 
 	{
+		
+		try {
+			LatLng latlng = GeocodingUtility.getLocation(address.getCity()+", "+address.getCountry());
+			address.setLatitude(latlng.getLat().doubleValue());
+			address.setLongitude(latlng.getLng().doubleValue());
+			//System.out.println("==================================="+address.getLatitude()+",   "+address.getLongitude()+"===================================");
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (LocationNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		openCurrentSessionwithTransaction();
-		getCurrentSession().save(entity);
+		getCurrentSession().save(address);
 		closeCurrentSessionwithTransaction();
 	}
-	public void updateAddress(Address entity)
+	public void updateAddress(Address address)
 	{
+		try {
+			LatLng latlng = GeocodingUtility.getLocation(address.getCity()+", "+address.getCountry());
+			address.setLatitude(latlng.getLat().doubleValue());
+			address.setLongitude(latlng.getLng().doubleValue());
+			//System.out.println("==================================="+address.getLatitude()+",   "+address.getLongitude()+"===================================");
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (LocationNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		openCurrentSessionwithTransaction();
-		getCurrentSession().update(entity);
+		getCurrentSession().update(address);
 		closeCurrentSessionwithTransaction();
 	}
 	public Address findAddressById(int id) 

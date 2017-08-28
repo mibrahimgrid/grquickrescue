@@ -2,12 +2,16 @@ package com.gr.grquickrescue.controllers;
 
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
+import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.SessionScoped;
+import javax.faces.context.FacesContext;
+import javax.servlet.http.HttpSession;
 import com.gr.grquickrescue.models.QRLogin;
 import com.gr.grquickrescue.services.QRLoginServiceRemote;
 import com.gr.grquickrescue.services.ServiceManager;
+import com.gr.grquickrescue.utils.SessionUtility;
 
 @ManagedBean
 @SessionScoped
@@ -18,11 +22,14 @@ public class LoginBean extends QRLogin
 	 */
 	private static final long serialVersionUID = 1L;
 	@EJB
-	private QRLoginServiceRemote loginService; 
-	private Boolean loggedIn;
+	private QRLoginServiceRemote loginService;
 
 	@ManagedProperty(value="#{navigationController}")
 	private NavigationController navigationController;
+	
+	private boolean loggedIn;
+	private boolean qrContact;
+	
 
 	@PostConstruct
 	public void init() 
@@ -35,19 +42,43 @@ public class LoginBean extends QRLogin
 	public String doLogin() 
 	{
 		String returnPage = null;
-		if( verifyUser()) 
+		boolean isValidUser = verifyUser();
+		
+		if( isValidUser)  // if a valid user then add it to session and login
 		{
+			HttpSession session = SessionUtility.getSession();
+			this.setQrContact(isQrContact());
 			this.loggedIn = true;
-			returnPage = getNavigationController().gotoAccounts(false);
-		} 
-		else {
+			session.setAttribute("isQRContact", qrContact);
+			session.setAttribute("user", this.getUsername());
+			if(qrContact) 
+			{
+				returnPage = getNavigationController().gotoAccounts(false);
+			}else 
+			{
+				returnPage = getNavigationController().gotoContacts(false);
+			}
+			
+		
+		} else 			// if not a valid user send message
+		{
+			FacesContext.getCurrentInstance().addMessage(null,
+					new FacesMessage(FacesMessage.SEVERITY_WARN,
+					"Incorrect Username and Passowrd","Please enter correct username and Password"));
 			this.loggedIn = false;
 			returnPage = getNavigationController().gotoIndex(true);
-		} 
-
+		}
 		return returnPage;
 	}
-	public Boolean verifyUser() 
+	public String doLogout() 
+	{
+		HttpSession session = SessionUtility.getSession();
+	    session.invalidate();
+	    loggedIn = false;
+		
+		return getNavigationController().goToLogin(false);
+	}
+	public boolean verifyUser() 
 	{
 		QRLogin loginUser = loginService.findLoginByUsername(this.getUsername());
 
@@ -59,13 +90,11 @@ public class LoginBean extends QRLogin
 			return false;
 		} 
 	}
-	public void doLogout() 
+	public boolean isQRContact(String email) 
 	{
-		loggedIn = false;
-		//navigate to login page
+		return email.indexOf("@quickrescue") >=0 ? true:false;
 	}
-
-	public Boolean isLoggedIn() {
+	public boolean isLoggedIn() {
 		return loggedIn;
 	}
 	public void setLoggedIn(Boolean loggedIn) {
@@ -78,5 +107,13 @@ public class LoginBean extends QRLogin
 
 	public void setNavigationController(NavigationController navigationController) {
 		this.navigationController = navigationController;
+	}
+
+	public boolean isQrContact() {
+		return qrContact;
+	}
+
+	public void setQrContact(boolean qrContact) {
+		this.qrContact = qrContact;
 	}
 }

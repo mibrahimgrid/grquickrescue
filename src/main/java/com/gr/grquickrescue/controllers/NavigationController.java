@@ -11,8 +11,8 @@ public class NavigationController implements java.io.Serializable
 	private static String contactsPath = "/resources/secured/contact/contact";
 	private static String alertProfilesPath = "/resources/secured/alertprofile/alertProfile";
 	private static String contractsPath = "/resources/secured/contract/contract";
-	private static String loginPath = "login";
-	private static String indexPath= "index";
+	private static String loginPath = "/login";
+	private static String indexPath= "/index";
 	private static String redirectTrueArgument = "?faces-redirect=true";
 	private static final long serialVersionUID = 1L;
 

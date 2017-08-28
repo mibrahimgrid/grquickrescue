@@ -11,5 +11,7 @@
 		<property name="city" type="java.lang.String" column="city"/>
 		<property name="province" type="java.lang.String" column="province"/>
 		<property name="country" type="java.lang.String" column="country"></property>
+		<property name="latitude" type="double" column="latitude"/>
+		<property name="longitude" type="double" column="longitude"/>
 	</class>
 </hibernate-mapping>

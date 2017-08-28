@@ -5,8 +5,6 @@ import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
-
-import com.gr.grquickrescue.models.Account;
 import com.gr.grquickrescue.models.Contract;
 import com.gr.grquickrescue.services.AccountServiceRemote;
 import com.gr.grquickrescue.services.ContractServiceRemote;
@@ -41,15 +39,14 @@ public class ContractController extends Contract {
 	{
 		setContractsList(contractService.findContractsByAccountId(this.getAccount().getId()));
 	}
-	public void addContract(int accountId) 
+	public void addContract() 
 	{
-		Account account = accountService.findAccountById(accountId);
 		Contract newContract = new Contract();
 		newContract.setStartDate(this.getStartDate().toString());
 		newContract.setEndDate(this.getEndDate().toString());
 		newContract.setMaxContacts(this.getMaxContacts());
 		newContract.setMaxLogins(this.getMaxLogins());
-		newContract.setAccount(account);
+		newContract.setAccount(this.getAccount());
 		contractService.saveContract(newContract);
 		updateContractsList();
 	}

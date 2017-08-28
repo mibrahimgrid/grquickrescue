@@ -49,6 +49,9 @@
 						value="#{resource['images:addNewUserImage.png']}" />
 					New Account
 				</button>
+				<h:form>
+				<h:commandLink action="/resources/secured/map/gmap" styleClass="viewContactHomesOnMapLink" value="View Contact Homes On Map" />
+			</h:form>
 
 			</h:form>
 
@@ -57,7 +60,7 @@
 		<br />
 		<h:panelGroup layout="block" class="dataTable">
 			<h:form id="accountForm">
-				<h:dataTable id="accountTable"
+				<h:dataTable id="accountTable" rows="10"
 					class="table table-striped table-bordered table-hover table-condensed"
 					value="#{accountController.accountsList}" var="account">
 

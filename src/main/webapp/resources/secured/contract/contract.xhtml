@@ -33,7 +33,7 @@
 							class="accountCredentials" p:placeholder="end Date (dd-mm-yyyy)" />
 					</tr>
 				</table>
-				<h:commandButton action="#{contractController.addContract(accountController.id)}"
+				<h:commandButton action="#{contractController.addContract()}"
 					id="saveNewAccountButton" value="Save"
 					class="newAccountBottomButton" style="left:28%;">
 					<a4j:ajax execute="addAccountForm"

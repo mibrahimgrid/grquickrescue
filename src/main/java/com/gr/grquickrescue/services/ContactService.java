@@ -39,6 +39,11 @@ public class ContactService implements ContactServiceRemote
 
 	}
 	@Override
+	public Contact findContactByEmail(String email) 
+	{
+		return contactDao.findContactByEmail(email);
+	}
+	@Override
 	public void deleteContact(int id)
 	{
 		Contact contact = contactDao.findContactById(id);

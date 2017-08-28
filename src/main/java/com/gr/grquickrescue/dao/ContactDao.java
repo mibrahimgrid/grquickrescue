@@ -13,11 +13,14 @@ public interface ContactDao
 	public void updateContact(Contact Entity);
 
 	public Contact findContactById(int id);
+	
+	public Contact findContactByEmail(String email);
 
 	public void deleteContact(Contact Entity);
 
 	public List<Contact> findAllContacts();
 
 	public List<Contact> findContactsByAccountId(int accountId);
+	
 	public void deleteAllContacts();
 }
