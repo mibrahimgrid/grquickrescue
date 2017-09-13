@@ -1,6 +1,7 @@
 @charset "ISO-8859-1";
 .loginPanel
 {
+	
 	width:400px;
 	height: 350px;
 	border:solid white;
@@ -45,6 +46,7 @@
 }
 .loginButton
 {
+	
 	background-color: white;
 	color: blue;
 	border-radius: 0%;

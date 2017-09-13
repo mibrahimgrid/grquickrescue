@@ -19,28 +19,29 @@
 						};
 
 						var map = new google.maps.Map(document.getElementById("googleMap"), mapProp);
-						
 
-						var addresses = [
-							<ui:repeat value="#{mapController.addresses}" var="address" varStatus="loop">
-						    	[ #{address.latitude} , #{address.longitude} ]#{loop.last ? '' : ','}
+						var markers = [
+							<ui:repeat value="#{mapController.markers}" var="mark" varStatus="loop">
+						    	[ #{mark.lat} , #{mark.lng}, '#{mark.title}' ]#{loop.last ? '' : ','}
 						  	</ui:repeat>
 							];
 						var marker;
-						for (var i = 0; i &lt; addresses.length; i++) {
-						    var address = addresses[i];
+						for (var i = 0; i &lt; markers.length; i++) {
+							var mark = markers[i];
 						    marker = new google.maps.Marker({
-						        position: new google.maps.LatLng(addresses[i][0], addresses[i][1]),
-						        map: map
+						        position: new google.maps.LatLng(markers[i][0], markers[i][1]),
+						        map: map,
+						        title: markers[i][2]
 						      });
 						}
+						
+						
 				}
 					
 				</script>
 				<div id="googleMap" class="googleMap"></div>
 				<script
 					src="https://maps.googleapis.com/maps/api/js?key=AIzaSyACUHzsn6qoxCaujs7uii43y22wb0ZQQN4&amp;callback=myMap"></script>
-				<h:inputHidden value="#{mapController.test}" />
 				
 			</body>
 			

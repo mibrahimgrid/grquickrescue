@@ -21,6 +21,4 @@ public interface ContactServiceRemote {
 	public List<Contact> findAllContacts();
 	
 	public List<Contact> findContactsByAccountId(int accountId);
-	
-	public void deleteAllContacts();
 }

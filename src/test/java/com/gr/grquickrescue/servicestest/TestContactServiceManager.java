@@ -36,7 +36,7 @@ public class TestContactServiceManager {
 		Account acc = new Account(22, "khan","mibrahim@globalrescue.com","GMT5+");
 		remoteAccountService.saveAccount(acc);
 		
-		Contact con   = new Contact("firstName","lastName","mibrahim@globalrescue.com","Male","9347643236",true,addr,acc);
+		Contact con   = new Contact("firstName","lastName","mibrahim@globalrescue.com","Male","9347643236",true,true,addr,acc);
 		remoteContactService.saveContact(con);
 	}
 

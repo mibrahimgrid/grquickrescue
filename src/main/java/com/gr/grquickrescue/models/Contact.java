@@ -14,28 +14,29 @@ public class Contact implements java.io.Serializable
 	private boolean status;
 	private Address address;
 	private Account account;
-	private String email;
+	private String emailAddress;
 	private transient boolean isEditable;
 	private boolean hasLogin;
 	public Contact()
 	{
 		address = new Address();
 	}
-	public Contact( String fname,String lname,String eaddr,String gender,String phnumber,boolean status, Address addr,Account acc)
+	public Contact( String fname,String lname,String eaddr,String gender,String phnumber,boolean haslogin, boolean status, Address addr,Account acc)
 	{
 		this.firstName = fname;
 		this.lastName = lname;
-		this.email = eaddr;
+		this.emailAddress = eaddr;
 		this.gender = gender;
 		this.phoneNumber = phnumber;
 		this.status = status;
 		this.address = addr;
 		this.account = acc;
+		this.hasLogin = haslogin;
 	}
 	public void ToString()
 	{
 
-		System.out.println(id+", "+firstName+" "+lastName+", "+email+", "+gender+", "+phoneNumber+","+status+","+address.getId()+","+account.getId());
+		System.out.println(id+", "+firstName+" "+lastName+", "+emailAddress+", "+gender+", "+phoneNumber+","+status+","+address.getId()+","+account.getId());
 	}
 	public String getFirstName() {
 		return firstName;
@@ -49,11 +50,11 @@ public class Contact implements java.io.Serializable
 	public void setLastName(String lastName) {
 		this.lastName = lastName;
 	}
-	public String getEmail() {
-		return email;
+	public String getEmailAddress() {
+		return emailAddress;
 	}
-	public void setEmail(String emailAddr) {
-		this.email = emailAddr;
+	public void setEmailAddress(String emailAddr) {
+		this.emailAddress = emailAddr;
 	}
 	public String getGender() {
 		return gender;

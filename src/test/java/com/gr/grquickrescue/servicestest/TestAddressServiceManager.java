@@ -35,10 +35,10 @@ public class TestAddressServiceManager {
 	{
 		Account account = new  Account(21, "khan1","mibrahim@globalrescue.com","GMT5+");
 		
-		Account testAccount = remoteAccountService.findAccountById(21);
+		//Account testAccount = remoteAccountService.findAccountById(21);
 		Address address  = new Address("House No 1","DGK","Punjab","Pakistan");
 		
-		Contact contact   = new Contact("firstName1","lastName","mibrahim@globalrescue.com","Male","9347643236",true,address,testAccount);
+		Contact contact   = new Contact("firstName1","lastName","mibrahim@quickrescue.com","Male","9347643236",true,true,address,account);
 		
 		remoteAddressService.saveAddress(address);
 		remoteAccountService.saveAccount(account);

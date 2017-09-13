@@ -22,7 +22,7 @@ public class TestAddressDaoManager {
 	public void TestSaveAddress() {
 		
 		Address addr  = new Address("House No 65","DGK","Punjab","Pakistan");
-		addressDao.saveAddress(addr);
+		//addressDao.saveAddress(addr);
 		
 	}
 	

@@ -79,7 +79,7 @@
   <exception-type>javax.faces.application.ViewExpiredException</exception-type>
   <location>/login.xhtml</location>
  </error-page>
- <security-constraint>
+<!--     <security-constraint>
   <display-name>Restrict direct access to the /resources folder.</display-name>
   <web-resource-collection>
    <web-resource-name>The /resources folder.</web-resource-name>
@@ -89,5 +89,5 @@
    <role-name>QRContact</role-name>
    <role-name>NRContact</role-name>
   </auth-constraint>
- </security-constraint>
+ </security-constraint>-->
 </web-app>

@@ -10,48 +10,59 @@
 
 	<ui:composition template="/resources/common/commonLayout.xhtml">
 	<ui:define name="content">
-		<div id="addNewAccountDiv" style="display: none"
-			class="addNewAccountDiv">
+		<h:panelGroup id="addNewContractDiv" layout="block" styleClass="addNewContractDiv" rendered="#{contractController.renderDiv}">
 			<h:form id="addAccountForm">
 				<table>
 					<tr>
-						<h:inputText value="#{contractController.maxContacts}"
+						
+						<h:inputText id="maxcontacts" value="#{contractController.maxContacts}"
 							class="accountCredentials" p:placeholder="Max Contacts" required="true"
-							requiredMessage="*" />
+							requiredMessage="*" validatorMessage="          Range 100-5000">
+							<f:ajax event="keyup" immediate="true" execute="maxContacts" render="maxlogins"/>
+							<f:validateLongRange minimum="100" maximum="1000"/>
+						</h:inputText>
+						<h:message for="maxcontacts" styleClass="warningError"/>
+						
 					</tr>
 					<tr>
-						<h:inputText value="#{contractController.maxLogins}"
+						<h:inputText id="maxlogins" value="#{contractController.maxLogins}"
 							class="accountCredentials" p:placeholder="Max Login" required="true"
-							requiredMessage="*" />
+							requiredMessage="*" validatorMessage="          Range 0-#{contractController.maxContacts}">
+							<f:validateLongRange minimum="0" maximum="#{contractController.maxContacts}" />
+						</h:inputText>
+						<h:message for="maxlogins" styleClass="warningError"/>
 					</tr>
 					<tr>
-						<h:inputText value="#{contractController.startDate}"
-							class="accountCredentials" p:placeholder="Start Date (dd-mm-yyyy)" />
+						<h:inputText value="#{contractController.startDate}" id="startdate" p:placeholder="start date" styleClass="accountCredentials" />
 					</tr>
 					<tr>
-						<h:inputText value="#{contractController.endDate}"
-							class="accountCredentials" p:placeholder="end Date (dd-mm-yyyy)" />
+						<h:inputText value="#{contractController.endDate}" id="enddate" p:placeholder="end date" styleClass="accountCredentials" />
+					</tr>
+					<tr>
+						<h:outputLabel value="#{contractController.errorMessage}" styleClass="warningError" rendered="#{contractController.renderError}" />
 					</tr>
 				</table>
 				<h:commandButton action="#{contractController.addContract()}"
 					id="saveNewAccountButton" value="Save"
 					class="newAccountBottomButton" style="left:28%;">
-					<a4j:ajax execute="addAccountForm"
-						render="contractForm:contractTable" onbeforesubmit="closediv()" />
+					<a4j:ajax execute="addAccountForm" render="contractForm:contractTable,addNewContractDiv" />
 				</h:commandButton>
-
-				<button type="button" id="cancelAddingNewAccountButton"
-					class="newAccountBottomButton" style="left: 50%;">Cancel</button>
+				
+				<h:commandButton action="#{contractController.closeNewContractDiv()}" immediate="true" id="cancelAddingNewContractButton" styleClass="newAccountBottomButton" value="Cancel" style="left: 50%;">
+					<a4j:ajax  execute="cancelAddingNewContractButton" render="addNewContractDiv"/>
+				</h:commandButton>
 			</h:form>
-		</div>
+		</h:panelGroup>
 		<div class="toolBox">
 			<h:form>
-				<b:inputText p:placeholder="Search Contract" class="searchBar" />
-				<button id="addNewAccountButton" type="button" class="addNewAccountButton">
-					<h:graphicImage class="addNewAccountImage"
-						value="#{resource['images:addNewUserImage.png']}" />
+				<h:commandButton id="newContractButton" action="#{contractController.openNewContractDiv()}" value="New Contract" rendered="#{loginBean.qrContact}" styleClass="addNewAccountButton">
+				 <a4j:ajax execute="newContractButton" render="addNewAccountDiv"/>
+				 </h:commandButton>
+				<!--  <button id="addNewAccountButton" type="button" class="addNewAccountButton">
+					
+					<h:graphicImage class="addNewAccountImage" value="#{resource['images:addNewUserImage.png']}" />
 					New Contract
-				</button>
+				</button>-->
 
 			</h:form>
 
@@ -69,7 +80,7 @@
 							<center>Max Contacts</center>
 						</f:facet>
 						<h:outputText value="#{contract.maxContacts}"  rendered="#{!contract.editable}"/>
-						<h:inputText value="#{contract.maxContacts}" rendered="#{contract.editable}"/>
+						<!--  <h:inputText value="#{contract.maxContacts}" rendered="#{contract.editable}"/>-->
 					</h:column>
 
 					<h:column>
@@ -77,7 +88,7 @@
 							<center>Max Login</center>
 						</f:facet>
 						<h:outputText value="#{contract.maxLogins}" rendered="#{!contract.editable}"/>
-						<h:inputText value="#{contract.maxLogins}" rendered="#{contract.editable}"/>
+						<!--  <h:inputText value="#{contract.maxLogins}" rendered="#{contract.editable}"/>-->
 					</h:column>
 
 					<h:column>
@@ -85,24 +96,30 @@
 							<center>Start Date</center>
 						</f:facet>
 						<h:outputText value="#{contract.startDate}" rendered="#{!contract.editable}"/>
-						<h:inputText value="#{contract.startDate}" rendered="#{contract.editable}"/>
+						<!--  <h:inputText value="#{contract.startDate}" id="cstartdate" rendered="#{contract.editable}"/>-->
 					</h:column>
 					<h:column>
 						<f:facet name="header">
 							<center>End Date</center>
 						</f:facet>
 						<h:outputText value="#{contract.endDate}" rendered="#{!contract.editable}"/>
-						<h:inputText value="#{contract.endDate}" rendered="#{contract.editable}"/>
+						<!--  <h:inputText value="#{contract.endDate}" id="cenddate" rendered="#{contract.editable}"/>-->
 					</h:column>
-					
 					<h:column>
 						<f:facet name="header">
+							<center>Status</center>
+						</f:facet>
+						<h:outputText value="Active" rendered="#{contract.active}"/>
+						<h:outputText value="Not Active" rendered="#{!contract.active}"/>
+					</h:column>
+					<h:column rendered="#{loginBean.qrContact}">
+						<f:facet name="header" >
 							<center>Action</center>
 						</f:facet>
-						<h:commandLink
+						<h:commandLink id="edit"
 							action="#{contractController.updateContract(contract)}"
-							value="Edit   " rendered="#{not contract.editable}">
-							<f:ajax render="contractForm:contractTable" />
+							value="Edit   " rendered="#{contract.active}">
+							<a4j:ajax execute="edit" render="addNewContractDiv" />
 						</h:commandLink>
 
 						<h:commandLink action="#{contractController.saveEdit(contract)}"
@@ -112,8 +129,8 @@
 
 						<h:commandLink
 							action="#{contractController.deleteContract(contract)}"
-							value="Delete   " rendered="#{not contract.editable}">
-							<f:ajax render="accountForm:accountTable" />
+							value="Delete   " rendered="#{!contract.editable}">
+							<f:ajax render="contractForm:contractTable" />
 						</h:commandLink>
 
 						<h:commandLink action="#{contractController.cancelEdit(contract)}"

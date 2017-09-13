@@ -13,7 +13,7 @@
 		
 		<property name="firstName" type="java.lang.String" column="firstName"/>
 		<property name="lastName" type="java.lang.String" column="lastName"/>
-		<property name="email" type="java.lang.String" column="emailAddress"/>
+		<property name="emailAddress" type="java.lang.String" column="emailAddress"/>
 		<property name="gender" type="java.lang.String" column="gender"/>
 		<property name="phoneNumber" type="java.lang.String" column="phoneNumber"/>
 		<property name="status" type="boolean" column="status"/>
@@ -21,7 +21,7 @@
 		<many-to-one name="account" class="Account">
 			<column name="accountID" unique="false" not-null="false"></column>
 		</many-to-one>
-		<many-to-one name="address" class="Address" column="addressID" unique="true" not-null="true" cascade="all"/>
+		<many-to-one name="address" class="Address" column="addressID" unique="true" lazy="false" not-null="true" cascade="all"/>
 	
 	</class>
 	

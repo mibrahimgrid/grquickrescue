@@ -1,0 +1,13 @@
+com\gr\grquickrescue\servicestest\TestQRLoginServiceManager.class
+com\gr\grquickrescue\daomanagertest\TestContractDaoManager.class
+com\gr\grquickrescue\utilstest\TestPasswordUtil.class
+com\gr\grquickrescue\daomanagertest\TestAlertProfileDaoManager.class
+com\gr\grquickrescue\servicestest\TestAlertProfileServiceManager.class
+com\gr\grquickrescue\daomanagertest\TestAddressDaoManager.class
+com\gr\grquickrescue\servicestest\TestAddressServiceManager.class
+com\gr\grquickrescue\daomanagertest\TestAccountDaoManager.class
+com\gr\grquickrescue\servicestest\TestAccountServiceManager.class
+com\gr\grquickrescue\servicestest\TestContractServiceManager.class
+com\gr\grquickrescue\daomanagertest\TestQRLoginDaoManager.class
+com\gr\grquickrescue\servicestest\TestContactServiceManager.class
+com\gr\grquickrescue\daomanagertest\TestContactDaoManager.class

@@ -10,6 +10,7 @@ import javax.faces.bean.SessionScoped;
 import com.gr.grquickrescue.models.Account;
 import com.gr.grquickrescue.services.AccountServiceRemote;
 import com.gr.grquickrescue.services.ServiceManager;
+
 @ManagedBean
 @SessionScoped
 public class AccountController extends Account {
@@ -21,36 +22,56 @@ public class AccountController extends Account {
 	@EJB
 	private AccountServiceRemote accountService;
 	private List<Account> accountsList;
-
+	private boolean renderDiv;
 	@PostConstruct
-	public void init()
-	{
+	public void init() {
+		renderDiv = false;
 		accountService = (AccountServiceRemote) ServiceManager.getInstance(AccountServiceRemote.class.getName());
 		updateAccountsList();
 	}
-	public void updateAccountsList() 
-	{
-		accountsList = accountService.findAllAccounts();
+	public void emptydiv() {
+		this.setEmail("");
+		this.setName("");
+		this.setTimeZone("");
 	}
-	public List<Account> getAccountsList() {
-		return accountsList;
+	public void openNewAccountDiv() {
+		renderDiv = true;
 	}
+	public void closeNewAccountDiv() {
+		setRenderDiv(false);
+		emptydiv();
+	} 
+	public String addAccount() {
 
-	public void setAccountsList(List<Account> accountsList) {
-		this.accountsList = accountsList;
+		Account account = new Account();
+		account.setName(this.getName());
+		account.setEmail(this.getEmail());
+		account.setTimeZone(this.getTimeZone());
+		accountService.saveAccount(account);
+		this.setName("");
+		this.setEmail("");
+		this.setTimeZone("");
+		closeNewAccountDiv();
+		updateAccountsList();
+		return NavigationController.gotoAccounts(true);
 	}
-	public String updateAccount(Account account) 
-	{
+	public String cancel() {
+		this.setName("");
+		this.setEmail("");
+		this.setTimeZone("");
+		return null;
+	}
+	public String makeEditable(Account account) {
 		account.setEditable(true);
 		return null;
 	}
-	public void deleteAccount(Account account) 
-	{
+
+	public void deleteAccount(Account account) {
 		accountService.deleteAccount(account.getId());
 		updateAccountsList();
 	}
-	public String saveEdit(Account account1) 
-	{
+
+	public String updateaccount(Account account1) {
 		for (Account account : accountsList) {
 			account.setEditable(false);
 		}
@@ -58,18 +79,26 @@ public class AccountController extends Account {
 		updateAccountsList();
 		return null;
 	}
-	public void cancelEdit(Account account) 
-	{
+
+	public void cancelEdit(Account account) {
 		account.setEditable(false);
 	}
-	public void addAccount() 
-	{
-		Account account  = new Account();
-		account.setName(this.getName());
-		account.setEmail(this.getEmail());
-		account.setTimeZone(this.getTimeZone());
-		
-		accountService.saveAccount(account);
-		updateAccountsList();
+
+	public void updateAccountsList() {
+		accountsList = accountService.findAllAccounts();
 	}
-}	
+
+	public List<Account> getAccountsList() {
+		return accountsList;
+	}
+
+	public void setAccountsList(List<Account> accountsList) {
+		this.accountsList = accountsList;
+	}
+	public boolean isRenderDiv() {
+		return renderDiv;
+	}
+	public void setRenderDiv(boolean renderDiv) {
+		this.renderDiv = renderDiv;
+	}
+}

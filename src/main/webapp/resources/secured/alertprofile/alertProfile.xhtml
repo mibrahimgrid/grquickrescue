@@ -10,31 +10,45 @@
 
 	<ui:composition template="/resources/common/commonLayout.xhtml">
 		<ui:define name="content">
-			<div id="addNewAccountDiv" style="display: none" class="addNewAccountDiv">
+			<h:panelGroup layout="block" rendered="#{alertProfileController.renderDiv}" id="addNewAlertDiv" styleClass="addNewAccountDiv">
 			<h:form id="addAccountForm">
-		        	<table>
+		        	<h:panelGrid>
 		        		<tr>
-		        			<h:inputText value="#{alertProfileController.name}" class="accountCredentials" p:placeholder="Name" required="true" requiredMessage="*"/>
+		        			<h:inputText id="name" value="#{alertProfileController.name}" class="accountCredentials" p:placeholder="Name" required="true" requiredMessage="Name required" validatorMessage="Name:Only Alphabets">
+		        				<f:validateRegex pattern="^[a-zA-Z\s]*$"/>
+		        			</h:inputText>
+		        			<h:message for="name" styleClass="warningError"/>
 		        		</tr>
 		        		<tr>
-		        			<h:inputText value="#{alertProfileController.city}" class="accountCredentials" p:placeholder="City" required="true" requiredMessage="*" />
+		        			<h:inputText id="city" value="#{alertProfileController.city}" class="accountCredentials" p:placeholder="City" required="true" requiredMessage="City required" validatorMessage="City:Only Alphabets">
+		        				<f:validateRegex pattern="^[a-zA-Z\s]*$"/>
+		        			</h:inputText>
+		        			<h:message for="city" styleClass="warningError"/>
 		        		</tr>
 		        		<tr>
-		        			<h:inputText value="#{alertProfileController.country}" class="accountCredentials" p:placeholder="Country" />
+		        			<h:inputText id="country" value="#{alertProfileController.country}" class="accountCredentials" p:placeholder="Country" required="true" requiredMessage="Country requierd" validatorMessage="Only Alphabets">
+		        				<f:validateRegex pattern="^[a-zA-Z\s]*$"/>
+		        			</h:inputText>
+		        			<h:message for="country" styleClass="warningError"/>
 		        		</tr>
-		        	</table>
+		        	</h:panelGrid>
 		        			<h:commandButton action="#{alertProfileController.addAlertProfile()}" id="saveNewAccountButton" value="Save" class="newAccountBottomButton" style="left:28%;">
-		        				<a4j:ajax execute="addAccountForm" render="accountForm:accountTable" onbeforesubmit="closediv()" />
+		        				<a4j:ajax execute="addAccountForm" render="accountForm:accountTable" />
 		        			</h:commandButton>
 		        			
-				        	<button type="button" id="cancelAddingNewAccountButton" class="newAccountBottomButton" style="left:50%;">Cancel</button>
+				        	<h:commandButton action="#{alertProfileController.closeNewAlertDiv()}" value="Cancel" id="cancelAddingNewAlertButton" immediate="true" styleClass="newAccountBottomButton" style="left:50%;">
+				        		<a4j:ajax execute="cancelAddingNewAlertButton" render="addNewAlertDiv"/>
+				        	</h:commandButton>
         	</h:form>
-        </div>
+        </h:panelGroup>
         <div class="toolBox" >
-        	<b:inputText p:placeholder="Search Account" class="searchBar"/>
-			<button id="addNewAccountButton" class="addNewAccountButton">
-				<h:graphicImage class="addNewAccountImage" value="#{resource['images:addNewUserImage.png']}"/>
-			New Alert Profile</button>
+			<input type="text" id="search" onkeyup="filter('search','accountForm:accountTable')" class="searchBar" placeholder="Search for names.." />
+			<h:form>
+				<h:commandButton action="#{alertProfileController.openNewAlertDiv()}" value="New Alert Profile" id="addNewAlertButton" styleClass="addNewAccountButton">
+					<a4j:ajax execute="addNewAlertButton" render="addNewAlertDiv"/>
+				</h:commandButton>
+			</h:form>
+			
 			
         </div>
          
@@ -62,7 +76,7 @@
 		            </h:column>           
 		        	<h:column>
 		        		<f:facet name="header"><center>Action</center> </f:facet>
-			        		<h:commandLink action="#{alertProfileController.updateAlertProfile(alert)}" value="Edit   " rendered="#{not alert.editable}">
+			        		<h:commandLink action="#{alertProfileController.makeAlertProfileEditable(alert)}" value="Edit   " rendered="#{not alert.editable}">
 			        			<f:ajax render="accountForm:accountTable" />
 			        		</h:commandLink>
 		        		

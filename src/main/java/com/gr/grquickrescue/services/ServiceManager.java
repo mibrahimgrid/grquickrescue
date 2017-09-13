@@ -3,7 +3,6 @@ package com.gr.grquickrescue.services;
 import java.util.HashMap;
 import java.util.Map;
 
-
 public class ServiceManager {
 	private static Map<String, Object> serviceMap;
 	private static ServiceManager instance;
@@ -34,4 +33,3 @@ public class ServiceManager {
 		return serviceMap.get(className);
 	}
 }
-

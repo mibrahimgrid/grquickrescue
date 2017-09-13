@@ -1,63 +1,74 @@
 package com.gr.grquickrescue.services;
 
 import java.util.List;
-import javax.ejb.EJB;
+
 import javax.ejb.Stateless;
+import javax.ejb.TransactionAttribute;
+import javax.ejb.TransactionAttributeType;
+import javax.ejb.TransactionManagement;
+import javax.ejb.TransactionManagementType;
 import com.gr.grquickrescue.dao.AlertProfileDao;
-import com.gr.grquickrescue.dao.AlertProfileDaoHibernateImpl;
 import com.gr.grquickrescue.dao.DaoManager;
 import com.gr.grquickrescue.models.AlertProfile;
+
 @Stateless
-public class AlertProfileService implements AlertProfileServiceRemote{
+@TransactionManagement(value=TransactionManagementType.CONTAINER)
+public class AlertProfileService implements AlertProfileServiceRemote {
 
-	@EJB
 	private static AlertProfileDao alertDao;
-	
-	public AlertProfileService() 
-	{
-		alertDao = (AlertProfileDaoHibernateImpl)DaoManager.getInstance(AlertProfileDao.class.getName());
+
+	public AlertProfileService() {
+		alertDao = (AlertProfileDao) DaoManager.getInstance(AlertProfileDao.class.getName());
 	}
 	@Override
+	@TransactionAttribute(TransactionAttributeType.REQUIRED)
 	public void saveAlertProfile(AlertProfile entity) {
-		// TODO Auto-generated method stub
-		alertDao.saveAlertProfile(entity);
+		try {
+			alertDao.saveInstance(entity);
+		} catch (Exception e) {
+				e.printStackTrace();
+		}
+		
 	}
 
 	@Override
+	@TransactionAttribute(TransactionAttributeType.REQUIRED)
 	public void updateAlertProfile(AlertProfile entity) {
-		// TODO Auto-generated method stub
-		alertDao.updateAlertProfile(entity);
+		try {
+			alertDao.updateInstance(entity);
+		} catch (Exception e) {
+				e.printStackTrace();
+		}
+		
 	}
 
 	@Override
 	public AlertProfile findAlertProfileById(int alertId) {
 		// TODO Auto-generated method stub
-		AlertProfile alert = alertDao.findAlertProfileById(alertId);
+		AlertProfile alert = alertDao.findInstanceById(alertId, AlertProfile.class);
 		return alert;
 	}
 
 	@Override
+	@TransactionAttribute(TransactionAttributeType.REQUIRED)
 	public void deleteAlertProfile(int alertId) {
-		// TODO Auto-generated method stub
-		AlertProfile alert = alertDao.findAlertProfileById(alertId);
-		alertDao.deleteAlertProfile(alert);
+		AlertProfile alert = alertDao.findInstanceById(alertId, AlertProfile.class);
+		try {
+			alertDao.deleteInstance(alert);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
 	}
 
 	@Override
 	public List<AlertProfile> findAllAlertProfiles() {
-		// TODO Auto-generated method stub
-		List<AlertProfile> alerts = alertDao.findAllAlertProfiles();
+		List<AlertProfile> alerts = alertDao.findAllInstances(AlertProfile.class);
 		return alerts;
 	}
+
 	@Override
-	public List<AlertProfile> findAlertProfilesByAccountId(int id)
-	{
+	public List<AlertProfile> findAlertProfilesByAccountId(int id) {
 		return alertDao.findAlertProfilesByAccountId(id);
 	}
-	@Override
-	public void deleteAllAlertProfiles() {
-		// TODO Auto-generated method stub
-		alertDao.deleteAllAlertProfiles();
-	}
-
 }

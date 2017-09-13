@@ -32,13 +32,13 @@ public class TestContactDaoManager {
 	public void TestSaveContact() 
 	{
 		Address addr  = new Address("House No 65","DGK","Punjab","Pakistan");
-		addressDao.saveAddress(addr);
+		//addressDao.saveAddress(addr);
 		
 		Account acc = new  Account(2, "khan","mibrahim@globalrescue.com","GMT5+");
-		accountDao.saveAccount(acc);
+		//accountDao.saveAccount(acc);
 		
-		Contact con   = new Contact("firstName","lastName","mibrahim@globalrescue.com","Male","9347643236",true,addr,acc);
-		contactDao.saveContact(con);
+		Contact con   = new Contact("firstName","lastName","mibrahim@globalrescue.com","Male","9347643236",true,true,addr,acc);
+		//contactDao.saveContact(con);
 		
 	}
 

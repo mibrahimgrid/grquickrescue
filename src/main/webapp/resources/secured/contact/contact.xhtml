@@ -9,73 +9,74 @@
 	
 <ui:composition template="/resources/common/commonLayout.xhtml">
 		<ui:define name="content">
-		<div id="addNewAccountDiv" style="display: none" class="addNewContactDiv">
-			<h:form id="addContactForm">
-		        	<table>
-		        		<tr>
-		        			<td> 
-		        				<h:inputText value="#{contactController.email}" class="accountCredentials" p:placeholder="Email" required="true" requiredMessage="*"/>
-		        			</td>
-		        			<td>
+		<h:panelGroup id="addNewContactDiv" layout="block" styleClass="addNewContactDiv" rendered="#{contactController.renderDiv}">
+			<h:form id="addContactForm" >
+		        	<h:panelGrid rendered="#{contactController.canAddMoreContacts}" columns="2">
+		        				
+		        				<h:inputText id="email" value="#{contactController.emailAddress}" class="accountCredentials" p:placeholder="Email" required="true" requiredMessage="Email required ," validatorMessage="Email:Invalid ">
+		        					<f:validateRegex pattern="^[_A-Za-z0-9-\+]+(\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\.[A-Za-z0-9]+)*(\.[A-Za-z]{2,})$"/>
+		        				</h:inputText>
+		        				
+
 		        				<h:inputText value="#{contactController.address.streetAddress}" class="accountCredentials" p:placeholder="Street Address" />
-		        			</td>
 		        			
-		        		</tr>
 		        		
-		        		<tr>
-		        			<td>
-		        				<h:inputText value="#{contactController.firstName}" class="accountCredentials" p:placeholder="FirstName" required="true" requiredMessage="*" />
-		        			</td>
-		        			<td>
-		        				<h:inputText value="#{contactController.address.city}" class="accountCredentials" p:placeholder="City" />
-		        			</td>
-		        		</tr>
-		        		
-		        		<tr>
-		        			<td>
-		        				<h:inputText value="#{contactController.lastName}" class="accountCredentials" p:placeholder="Last Name" />
-		        			</td>
-		        			<td>
-		        				<h:inputText value="#{contactController.address.country}" class="accountCredentials" p:placeholder="Country" />
-		        			</td>
-		        		</tr>
-		        		
-		        		<tr>
-		        			<td>
-		        				<h:inputText value="#{contactController.phoneNumber}" class="accountCredentials" p:placeholder="Mobile Number" />
-		        			</td>
-		        		</tr>
-		        		
-		        		<tr>
-							<h:selectOneRadio value="#{contactController.gender}">
-								<f:selectItem itemValue="Male" itemLabel="Male"/>
-								<f:selectItem itemValue="Female" itemLabel="Female"/>
-							</h:selectOneRadio>
-		        		</tr>
-		        		
-		        		<tr>
-		        			<td>
-		        			<br/>
-		        				<h:selectBooleanCheckbox value="#{contactController.hasLogin}" label="Has Login"/>Has Login
-		        			</td>
-		        			
-		        		</tr>
-		        		
-		        	</table>
-		        			<h:commandButton actionListener="#{contactController.addNewContact()}" value="Save" id="saveNewAccountButton" class="newAccountBottomButton" style="left:35%;">
-		        				<a4j:ajax execute="addContactForm"  render="contactForm:contactTable" onbeforedomupdate="closediv()"  />
+		        				<h:inputText id="fname" value="#{contactController.firstName}" class="accountCredentials" p:placeholder="FirstName" required="true" requiredMessage="First Name required ," validatorMessage="First Name:Only Alphabets">
+									<f:validateRegex pattern="^[a-zA-Z\s]*$" />
+		        				</h:inputText>
+		        					
+		        				
+		        				<h:inputText id="city" value="#{contactController.address.city}" class="accountCredentials" p:placeholder="City" required="true" requiredMessage="City Required ," validatorMessage="City:Only Alphabets">
+		        					<f:validateRegex pattern="^[a-zA-Z\s]*$"/>
+		        				</h:inputText>
+		        				
+		        				
+		        				
+		        				<h:inputText id="lname" value="#{contactController.lastName}" class="accountCredentials" p:placeholder="Last Name" required="true" requiredMessage="Last Name required ," validatorMessage="Last Name:Only Alphabets">
+		        					<f:validateRegex pattern="^[a-zA-Z\s]*$"/>
+		        				</h:inputText>
+		        				
+		        				<h:inputText id="country" value="#{contactController.address.country}" class="accountCredentials" p:placeholder="Country" required="true" requiredMessage="country required ," validatorMessage="Country:Only Alphabets">
+		        					<f:validateRegex pattern="^[a-zA-Z\s]*$"/>
+		        				</h:inputText>
+		        				
+		        				<h:inputText id="phnumber" value="#{contactController.phoneNumber}" class="accountCredentials" p:placeholder="Mobile Number">
+		        				</h:inputText>
+								<h:selectOneRadio value="#{contactController.gender}">
+									<f:selectItem itemValue="Male" itemLabel="Male"/>
+									<f:selectItem itemValue="Female" itemLabel="Female"/>
+								</h:selectOneRadio>
+			        			<h:selectBooleanCheckbox value="#{contactController.hasLogin}" rendered="#{contactController.canAddMoreLogins}"/>Has Login
+		        	</h:panelGrid>
+		        	<h:message for="country" styleClass="warningError"/>
+		        	<br/>
+		        	<h:message for="lname" styleClass="warningError"/>
+		    		<br/>
+		    		<h:message for="email" styleClass="warningError"/>
+		        	<br/>
+		        	<h:message for="fname" styleClass="warningError"/>
+		        	<br/>
+		        	<h:message for="city" styleClass="warningError"/>
+		        	<h:outputLabel value="#{contactController.errorMessage}" styleClass="warningError" rendered="#{contactController.renderError}" />
+		        			<h:commandButton actionListener="#{contactController.addNewContact()}" value="Save" id="saveNewAccountButton" class="newAccountBottomButton" rendered="#{contactController.canAddMoreContacts}" style="left:35%;">
+		        				<a4j:ajax execute="addContactForm"  render="contactForm:contactTable"/>
 		        			</h:commandButton>
-				        	<button type="button" id="cancelAddingNewAccountButton" class="newAccountBottomButton" style="left:50%;">Cancel</button>
+				        	<h:commandButton action="#{contactController.closeNewContactDiv()}" value="Cancel" immediate="true" id="cancelAddingNewContactButton" class="newAccountBottomButton" style="left:50%;">
+				        		<a4j:ajax execute="cancelAddingNewContactButton" render="addNewContactDiv"/>
+				        	</h:commandButton>
         	</h:form>
-        </div>
-        <div class="toolBox" >
-        	<b:inputText p:placeholder="Search Contact" class="searchBar"/>
+        </h:panelGroup>
+        <div class="toolBox">
+			<input type="text" id="search" onkeyup="filter('search','contactForm:contactTable')" class="searchBar" placeholder="Search for names.." />
 			
-			<button id="addNewAccountButton" class="addNewAccountButton">
-				<h:graphicImage class="addNewAccountImage" value="#{resource['images:addNewUserImage.png']}"/>
-			New User</button>
+			<!--  <h:graphicImage class="addNewAccountImage" value="#{resource['images:addNewUserImage.png']}"/>-->
 			<h:form>
-				<h:commandLink action="/resources/secured/map/gmap" styleClass="viewContactHomesOnMapLink" value="View Contact Homes On Map" />
+				<h:commandButton id="addNewContactButton" action="#{contactController.openNewContactDiv()}" styleClass="addNewAccountButton" value="New User">
+					<a4j:ajax execute="addNewContactButton" render="addNewContactDiv"/>
+				</h:commandButton>
+				<h:commandLink action="#{mapController.showContactHomesOnMap(contactController.account.id)}" styleClass="viewContactHomesOnMapLink" value="View Contact Homes On Map" />
+				<h:commandLink action="#{alertProfileController.openAccountAlertProfiles(contactController.account.id)}" styleClass="addNewAccountButton" value="Alert Profile" />
+				<h:commandLink action="/resources/secured/contract/contract" styleClass="addNewAccountButton" value="Contract" />
 			</h:form>
 			
         </div>
@@ -83,10 +84,6 @@
 	<h:panelGroup layout="block" class="dataTable">
 		<h:form id="contactForm">
 	        <h:dataTable id="contactTable" class="table table-striped table-bordered table-hover table-condensed" value="#{contactController.contactsList}" var="contactItem">
-	            <h:column>
-	            	<f:facet name="header">Contact ID</f:facet>
-	               <h:outputText value="#{contactItem.id}"/>
-	            </h:column>
 	            <h:column>
 	            	<f:facet name="header">First Name</f:facet>
 	               <h:outputText value="#{contactItem.firstName}" rendered="#{!contactItem.editable}"/>
@@ -112,12 +109,12 @@
 	            
 	            <h:column>
 	            	<f:facet name="header">Email Address</f:facet>
-	               <h:outputText value="#{contactItem.email}" rendered="#{!contactItem.editable}"/>
-	               <h:inputText value="#{contactItem.email}" rendered="#{contactItem.editable}"/>
+	               <h:outputText value="#{contactItem.emailAddress}" rendered="#{!contactItem.editable}"/>
+	               <h:inputText value="#{contactItem.emailAddress}" rendered="#{contactItem.editable}"/>
 	            </h:column>
 	            <h:column>
 	            	<f:facet name="header">Actions</f:facet>
-	            	<h:commandLink action="#{contactController.updateContact(contactItem)}" value="Edit  " rendered="#{!contactItem.editable}">
+	            	<h:commandLink action="#{contactController.makeContactEditable(contactItem)}" value="Edit  " rendered="#{!contactItem.editable}">
 	            		<f:ajax render="contactForm:contactTable" />
 	            	</h:commandLink>
 	            	<h:commandLink action="#{contactController.saveEdit(contactItem)}" value="Save  " rendered="#{contactItem.editable}">

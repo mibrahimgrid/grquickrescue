@@ -30,7 +30,7 @@ public class Account implements java.io.Serializable {
 	public void ToString() {
 		System.out.println(id + ", " + name + ", " + email);
 	}
-
+	
 	public String getName() {
 		return name;
 	}

@@ -9,13 +9,17 @@
     <h:head>
 		<f:facet name="middle">
             <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js" />
+            <script type="text/javascript" src="https://code.jquery.com/ui/1.12.1/jquery-ui.js" />
+            <link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css" />
             <link rel="stylesheet" type="text/css" href="#{resource['bootstrap/css/bootstrap.css']}"/>
             <link rel="stylesheet" type="text/css" href="#{resource['bootstrap/css/commonLayoutStyle.css']}"/> 
             <link rel="stylesheet" type="text/css" href="#{resource['bootstrap/css/accountStyle.css']}"/>
+            <link rel="stylesheet" type="text/css" href="#{resource['bootstrap/css/contractStyle.css']}"/>
             <link rel="stylesheet" type="text/css" href="#{resource['bootstrap/css/contactStyle.css']}"/>
             <link rel="stylesheet" type="text/css" href="#{resource['bootstrap/css/loginStyle.css']}"/>
             <link rel="stylesheet" type="text/css" href="#{resource['bootstrap/css/mapStyle.css']}"/>
             <script type="text/javascript" src="#{resource['bootstrap/js/qrAccount.js']}"/>
+			<script type="text/javascript" src="#{resource['bootstrap/js/qrContract.js']}"/>
             <script type="text/javascript" src="#{resource['bootstrap/js/qrMap.js']}"/>
             <script type="text/javascript" src="#{resource['bootstrap/js/bootstrap.js']}"/>
            <meta http-equiv="refresh" content="${pageContext.session.maxInactiveInterval};url=/login.xhtml"/> 

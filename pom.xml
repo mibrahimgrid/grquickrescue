@@ -44,6 +44,24 @@
 
 	<dependencies>
 		<!-- https://mvnrepository.com/artifact/com.google.code.geocoder-java/geocoder-java -->
+		<!-- <dependency>
+		    <groupId>org.richfaces.core</groupId>
+		    <artifactId>richfaces-core-api</artifactId>
+		    <version>4.0.0.Final</version>
+		    <scope>compile</scope>
+		</dependency>
+		<dependency>
+		    <groupId>org.richfaces.core</groupId>
+		    <artifactId>richfaces-core-impl</artifactId>
+		    <version>4.0.0.Final</version>
+		    <scope>compile</scope>
+		</dependency>
+		<dependency>
+		    <groupId>org.richfaces.ui</groupId>
+		    <artifactId>richfaces-components-ui</artifactId>
+		    <version>4.0.0.Final</version>
+		    <scope>compile</scope>
+		</dependency> -->
 		<dependency>
 		    <groupId>com.google.code.geocoder-java</groupId>
 		    <artifactId>geocoder-java</artifactId>

@@ -1,63 +1,65 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
-	xmlns:ui="http://java.sun.com/jsf/facelets"
-	xmlns:f="http://java.sun.com/jsf/core"
-	xmlns:h="http://java.sun.com/jsf/html"
-	xmlns:b="http://java.sun.com/jsf/html"
-	xmlns:p="http://xmlns.jcp.org/jsf/passthrough"
-	xmlns:a4j="http://richfaces.org/a4j"
-	xmlns:rich="http://richfaces.org/rich">
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:b="http://java.sun.com/jsf/html"
+      xmlns:p="http://xmlns.jcp.org/jsf/passthrough"
+      xmlns:a4j="http://richfaces.org/a4j">
 
 
 <ui:composition template="/resources/common/commonLayout.xhtml">
 	<ui:define name="content">
-		<div id="addNewAccountDiv" style="display: none"
-			class="addNewAccountDiv">
+		<h:panelGroup id="addNewAccountDiv" layout="block"  rendered="#{accountController.renderDiv}" styleClass="addNewAccountDiv">
 			<h:form id="addAccountForm">
-				<table>
-					<tr>
-						<h:inputText value="#{accountController.name}"
+				<h:panelGrid>
+						
+						<h:inputText id="name" value="#{accountController.name}"
 							class="accountCredentials" p:placeholder="Name" required="true"
-							requiredMessage="*" />
-					</tr>
-					<tr>
-						<h:inputText value="#{accountController.email}"
+							requiredMessage="Name required" validatorMessage="   Alphabets and Space allowed ">
+							<f:validateRegex pattern="^[a-zA-Z\s]*$" />
+						</h:inputText>
+						
+						<h:inputText id="email" value="#{accountController.email}"
 							class="accountCredentials" p:placeholder="Email" required="true"
-							requiredMessage="*" />
-					</tr>
-					<tr>
-						<h:inputText value="#{accountController.timeZone}"
-							class="accountCredentials" p:placeholder="TimeZone" />
-					</tr>
-				</table>
+							requiredMessage="*Email required" validatorMessage="   Invalid Email Address">
+							<f:ajax/>
+							<f:validateRegex pattern="^[_A-Za-z0-9-\+]+(\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\.[A-Za-z0-9]+)*(\.[A-Za-z]{2,})$" />
+						</h:inputText>
+						
+						<h:inputText id="timezone" value="#{accountController.timeZone}"
+							class="accountCredentials" p:placeholder="TimeZone"/>
+						<h:message for="email" styleClass="warningError"/>
+						<br/>
+						<h:message for="name" styleClass="warningError"/>
+				</h:panelGrid>
 				<h:commandButton action="#{accountController.addAccount()}"
 					id="saveNewAccountButton" value="Save"
 					class="newAccountBottomButton" style="left:28%;">
 					<a4j:ajax execute="addAccountForm"
-						render="accountForm:accountTable" onbeforesubmit="closediv()" />
+						render="accountForm:accountTable" />
 				</h:commandButton>
 
-				<button type="button" id="cancelAddingNewAccountButton"
-					class="newAccountBottomButton" style="left: 50%;">Cancel</button>
+				<h:commandButton action="#{accountController.closeNewAccountDiv()}" immediate="true"
+				 id="cancelAddingNewAccountButton" class="newAccountBottomButton" value="Cancel"
+				 style="left: 50%;">
+				 <a4j:ajax execute="cancelAddingNewAccountButton" render="addNewAccountDiv"/>
+				 </h:commandButton>
 			</h:form>
-		</div>
+		</h:panelGroup>
 		<div class="toolBox">
+			<!--  <b:inputText id="searchAccount" p:placeholder="Search Account" styleClass="searchBar" />-->
+			<input type="text" id="myInput" onkeyup="filter('myInput','accountForm:accountTable')" class="searchBar" placeholder="Search for names.." />
 			<h:form>
-				<b:inputText p:placeholder="Search Account" class="searchBar" />
-				<button id="addNewAccountButton" type="button" class="addNewAccountButton">
-					<h:graphicImage class="addNewAccountImage"
-						value="#{resource['images:addNewUserImage.png']}" />
-					New Account
-				</button>
-				<h:form>
-				<h:commandLink action="/resources/secured/map/gmap" styleClass="viewContactHomesOnMapLink" value="View Contact Homes On Map" />
-			</h:form>
-
+				<h:commandButton id="addNewAccountButton" action="#{accountController.openNewAccountDiv()}" styleClass="addNewAccountButton" value="New Account">
+					<a4j:ajax execute="addNewAccountButton" render="addNewAccountDiv"/>
+				</h:commandButton>
+				
 			</h:form>
 
 		</div>
 
-		<br />
+		<br/>
 		<h:panelGroup layout="block" class="dataTable">
 			<h:form id="accountForm">
 				<h:dataTable id="accountTable" rows="10"
@@ -90,7 +92,7 @@
 							<center>Time Zone</center>
 						</f:facet>
 						<h:outputText value="#{account.timeZone}"
-							rendered="#{not account.editable}"/>
+							rendered="#{not account.editable}" />
 						<h:inputText value="#{account.timeZone}"
 							rendered="#{account.editable}" />
 					</h:column>
@@ -98,21 +100,25 @@
 						<f:facet name="header">
 							<center>Subscription</center>
 						</f:facet>
-						<h:commandLink action="#{alertProfileController.openAccountAlertProfiles(account.id)}" value="Alert Profile    "/>
-						<h:commandLink action="#{contractController.openAccountContracts(account.id)}" value="Contract"/>
+						<h:commandLink
+							action="#{alertProfileController.openAccountAlertProfiles(account.id)}"
+							value="Alert Profile    " />
+						<h:commandLink
+							action="#{contractController.openAccountContracts(account.id)}"
+							value="Contract" />
 					</h:column>
-					
+
 					<h:column>
 						<f:facet name="header">
 							<center>Action</center>
 						</f:facet>
-						<h:commandLink
-							action="#{accountController.updateAccount(account)}"
+						<h:commandLink action="#{accountController.makeEditable(account)}"
 							value="Edit   " rendered="#{not account.editable}">
 							<f:ajax render="accountForm:accountTable" />
 						</h:commandLink>
 
-						<h:commandLink action="#{accountController.saveEdit(account)}"
+						<h:commandLink
+							action="#{accountController.updateaccount(account)}"
 							value="Save   " rendered="#{account.editable}">
 							<f:ajax execute="accountForm" render="accountForm:accountTable" />
 						</h:commandLink>
@@ -120,7 +126,7 @@
 						<h:commandLink
 							action="#{accountController.deleteAccount(account)}"
 							value="Delete   " rendered="#{not account.editable}">
-							  <f:ajax render="accountForm:accountTable" />
+							<f:ajax render="accountForm:accountTable" />
 						</h:commandLink>
 
 						<h:commandLink action="#{accountController.cancelEdit(account)}"

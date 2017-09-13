@@ -25,14 +25,27 @@ public class AlertProfileController extends AlertProfile{
 	@EJB
 	private AccountServiceRemote accountService;
 	private List<AlertProfile> alertsList;
-	
+	private boolean renderDiv;
 	@PostConstruct
 	public void init() 
 	{
+		renderDiv = false;
 		alertService = (AlertProfileServiceRemote)ServiceManager.getInstance(AlertProfileServiceRemote.class.getName());
 		accountService = (AccountServiceRemote)ServiceManager.getInstance(AccountServiceRemote.class.getName());
 		//updateAlertProfilesList();
 		
+	}
+	public void openNewAlertDiv() {
+		renderDiv = true;
+	}
+	public void closeNewAlertDiv() {
+		renderDiv = false;
+		emptyDiv();
+	}
+	public void emptyDiv() {
+		this.setName("");
+		this.setCity("");
+		this.setCountry("");
 	}
 	public String openAccountAlertProfiles(int accountId) 
 	{
@@ -52,9 +65,11 @@ public class AlertProfileController extends AlertProfile{
 		newAlert.setCountry(this.getCountry());
 		newAlert.setAccount(this.getAccount());
 		alertService.saveAlertProfile(newAlert);
+		closeNewAlertDiv();
 		updateAlertProfilesList();
+		
 	}
-	public String updateAlertProfile(AlertProfile alert) 
+	public String makeAlertProfileEditable(AlertProfile alert) 
 	{
 		alert.setEditable(true);
 		return null;
@@ -82,5 +97,11 @@ public class AlertProfileController extends AlertProfile{
 	}
 	public void setAlertsList(List<AlertProfile> alertsList) {
 		this.alertsList = alertsList;
+	}
+	public boolean isRenderDiv() {
+		return renderDiv;
+	}
+	public void setRenderDiv(boolean renderDiv) {
+		this.renderDiv = renderDiv;
 	}
 }

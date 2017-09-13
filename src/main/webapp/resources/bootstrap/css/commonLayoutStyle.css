@@ -35,3 +35,15 @@ html, body
 	margin-right:20px;
 	margin-top: 20px;		
 }
+.userNameLabel{
+	font:bold;
+	color:white;
+	float:right;
+	margin-right:20px;
+	margin-top: 20px;	
+}
+.warningError{
+	color: red;
+	font-size: medium;
+	font-weight: bold;
+}

@@ -1,5 +1,9 @@
 package com.gr.grquickrescue.models;
 
+import java.util.Date;
+
+import com.gr.grquickrescue.utils.DateUtility;
+
 public class Contract implements java.io.Serializable{
 
 	/**
@@ -24,7 +28,16 @@ public class Contract implements java.io.Serializable{
 	public Contract() 
 	{
 	}
-	
+	public boolean isActive() {
+		int value = 0;
+		try {
+			value  =  DateUtility.toDate(endDate).compareTo(new Date());
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return value > 0;
+		
+	}
 	public int getMaxContacts() {
 		return maxContacts;
 	}
